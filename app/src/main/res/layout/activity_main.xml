@@ -21,10 +21,10 @@
         android:id="@+id/version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="12dp"
         android:gravity="center"
-        android:text="Powered by Ryens"
-        android:textSize="12sp"
+        android:text="娱乐软件，仅供学习交流\n\nPowered by Ryens"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
