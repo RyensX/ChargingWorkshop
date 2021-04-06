@@ -55,6 +55,10 @@ class SharkManChargeService : Service() {
     override fun onDestroy() {
         unregisterReceiver(bbcr)
         isOpen = false
+
+        ChargeAudioManager.INS.release()
+
+        SettingsFragmentCompat.SoundPreference.releaseMedia()
         super.onDestroy()
     }
 }
