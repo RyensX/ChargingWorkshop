@@ -17,18 +17,21 @@ class SettingsFragmentCompat : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.pre_settings, rootKey)
 
-        findPreference<SwitchPreference>(getString(R.string.charge_service))?.onPreferenceClickListener =
-            Preference.OnPreferenceClickListener {
-                if (it is SwitchPreference) {
-                    //Log.d("测速", "守护服务${it.isChecked}")
-                    val intent = Intent(requireContext(), SharkManChargeService::class.java)
-                    if (it.isChecked)
-                        requireActivity().startService(intent)
-                    else
-                        requireActivity().stopService(intent)
+        findPreference<SwitchPreference>(getString(R.string.charge_service))?.apply {
+            isChecked = SharkManChargeService.isOpen
+            onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    if (it is SwitchPreference) {
+                        //Log.d("测速", "守护服务${it.isChecked}")
+                        val intent = Intent(requireContext(), SharkManChargeService::class.java)
+                        if (it.isChecked)
+                            requireActivity().startService(intent)
+                        else
+                            requireActivity().stopService(intent)
+                    }
+                    true
                 }
-                true
-            }
+        }
 
         findPreference<SwitchPreference>(getString(R.string.charge_is_audio))?.apply {
             isEnableAudio = isChecked
