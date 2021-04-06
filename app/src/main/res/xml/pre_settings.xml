@@ -23,13 +23,9 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="闹钟相关"
-        app:iconSpaceReserved="false">
-        <Preference
-            android:title="早安铃声"
-            app:iconSpaceReserved="false" />
-        <Preference
-            android:title="晚安铃声"
-            app:iconSpaceReserved="false" />
+        android:title="音频列表"
+        app:iconSpaceReserved="false"
+        android:key="@string/charge_sounds">
+
     </PreferenceCategory>
 </PreferenceScreen>
