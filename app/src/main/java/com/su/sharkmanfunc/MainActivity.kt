@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         findViewById<TextView>(R.id.version).apply {
             val tf = Typeface.createFromAsset(assets, "fonts/bshark_bold.ttf")
-            typeface=tf
+            typeface = tf
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (!Settings.canDrawOverlays(this)) {
