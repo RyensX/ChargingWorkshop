@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">鲨鲨酱.jpg</string>
+    <string name="charge_task">charge_task</string>
+    <string name="charge_service">charge_service</string>
+    <string name="charge_is_audio">charge_is_audio</string>
+    <string name="charge_ho_bias">charge_ho_bias</string>
+</resources>
