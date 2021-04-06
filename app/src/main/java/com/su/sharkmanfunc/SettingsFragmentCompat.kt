@@ -41,11 +41,4 @@ class SettingsFragmentCompat : PreferenceFragmentCompat() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (SharkManChargeService.isOpen) {
-            val intent = Intent(requireContext(), SharkManChargeService::class.java)
-            requireContext().stopService(intent)
-        }
-    }
 }

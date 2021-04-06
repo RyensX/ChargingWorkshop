@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         ChargeAudioManager.INS.release()
+        super.onDestroy()
     }
 
 }
