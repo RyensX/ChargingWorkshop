@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:gravity="center"
-        android:text="娱乐软件，仅供学习交流\n\nPowered by Ryens"
+        android:text="免费娱乐软件，仅供学习交流\n\nPowered by Ryens"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
