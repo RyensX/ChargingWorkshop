@@ -18,5 +18,11 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowAnimationStyle">@style/ChargeAnimation</item>
+    </style>
+
+    <style name="ChargeAnimation">
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:windowExitAnimation">@null</item>
     </style>
 </resources>
