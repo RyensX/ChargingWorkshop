@@ -40,9 +40,6 @@ android {
                     if (outputFile != null && outputFile.name.contains('release')) {
                         def fileName = appName + "${variant.versionName}(${versionCode})_release.apk"
                         outputFileName = fileName
-                    } else if (outputFile != null && outputFile.name.contains('debug')) {
-                        def fileName = appName + "${variant.versionName}(${versionCode})_debug.apk"
-                        outputFileName = fileName
                     }
             }
     }
