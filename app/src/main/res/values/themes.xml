@@ -17,6 +17,7 @@
     <style name="Theme.Charge" parent="Theme.SharkManFunc">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowAnimationStyle">@style/ChargeAnimation</item>
     </style>
