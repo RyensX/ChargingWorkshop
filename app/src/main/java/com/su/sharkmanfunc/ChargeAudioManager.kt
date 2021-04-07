@@ -3,6 +3,7 @@ package com.su.sharkmanfunc
 import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
+import android.util.Log
 
 class ChargeAudioManager {
 
@@ -10,16 +11,23 @@ class ChargeAudioManager {
         val INS by lazy { ChargeAudioManager() }
     }
 
-    private var media: MediaPlayer? = MediaPlayer().checkApply {
-        setOnPreparedListener {
-            start()
+    private var media: MediaPlayer? = null
+        get() {
+            if (field == null)
+                field = getMediaIns()
+            return field
         }
-    }
 
     private val lowBattery = arrayOf(R.raw.low_1, R.raw.low_2)
     private val normalBattery = arrayOf(R.raw.charging_1, R.raw.charging_2)
     private val offBattery = R.raw.off
     private val completeCharge = R.raw.completed
+
+    private fun getMediaIns() = MediaPlayer().apply {
+        setOnPreparedListener {
+            start()
+        }
+    }
 
     fun play(context: Context, battery: Int) {
         media?.also {
