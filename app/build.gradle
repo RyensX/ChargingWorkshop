@@ -29,6 +29,23 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    //自定义输出
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                output ->
+                    def outputFile = output.outputFile
+                    def appName = "鲨鲨酱.jpg_"
+                    if (outputFile != null && outputFile.name.contains('release')) {
+                        def fileName = appName + "${variant.versionName}(${versionCode})_release.apk"
+                        outputFileName = fileName
+                    } else if (outputFile != null && outputFile.name.contains('debug')) {
+                        def fileName = appName + "${variant.versionName}(${versionCode})_debug.apk"
+                        outputFileName = fileName
+                    }
+            }
+    }
 }
 
 repositories { flatDir { dirs 'libs' } }
