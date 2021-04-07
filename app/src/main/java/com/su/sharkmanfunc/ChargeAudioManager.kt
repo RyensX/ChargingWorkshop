@@ -31,7 +31,6 @@ class ChargeAudioManager {
 
     fun play(context: Context, battery: Int) {
         media?.also {
-            it.reset()
             when {
                 battery <= 5 -> playOff(context)
                 battery in 6..20 -> playLow(context)
@@ -43,6 +42,7 @@ class ChargeAudioManager {
 
     fun playLow(context: Context) {
         media?.checkApply {
+            reset()
             setDataSource(context, getRandomAudio(context, lowBattery))
             prepare()
             start()
@@ -51,6 +51,7 @@ class ChargeAudioManager {
 
     fun playNormal(context: Context) {
         media?.checkApply {
+            reset()
             setDataSource(context, getRandomAudio(context, normalBattery))
             prepareAsync()
         }
@@ -59,6 +60,7 @@ class ChargeAudioManager {
 
     fun playOff(context: Context) {
         media?.checkApply {
+            reset()
             setDataSource(context, getRawFileUrl(context, offBattery))
             prepareAsync()
         }
@@ -66,6 +68,7 @@ class ChargeAudioManager {
 
     fun playCompleted(context: Context) {
         media?.checkApply {
+            reset()
             setDataSource(context, getRawFileUrl(context, completeCharge))
             prepareAsync()
         }
@@ -86,8 +89,9 @@ class ChargeAudioManager {
     }
 
     inline fun <T> T.checkApply(block: T.() -> Unit): T {
-        if (SettingsFragmentCompat.isEnableAudio)
+        if (SettingsFragmentCompat.isEnableAudio) {
             block()
+        }
         return this
     }
 
