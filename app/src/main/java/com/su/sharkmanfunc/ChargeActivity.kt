@@ -34,7 +34,7 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
         val tf = Typeface.createFromAsset(assets, "fonts/bshark_bold.ttf")
         info.typeface = tf
 
-        info.text = "${(BatteryBroadCastReceiver.firstBattery * 100)}%"
+        info.text = "${BatteryBroadCastReceiver.firstBattery}%"
         //视频
         video.apply {
             setVideoURI(Uri.parse("android.resource://${packageName}/${R.raw.wired_quick_charge_video}"))
