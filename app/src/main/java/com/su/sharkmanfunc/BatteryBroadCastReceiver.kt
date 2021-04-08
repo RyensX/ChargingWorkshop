@@ -15,6 +15,11 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
 
         var firstBattery = 0
 
+        fun checkIsCharging(context: Context): Boolean {
+            val bc = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+            return bc?.let { it.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1) != 0 } ?: false
+        }
+
         fun addBatteryListener(listener: BatteryListener) {
             this.listener = listener
         }
@@ -59,7 +64,10 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
                         }
                     }
                     Intent.ACTION_SCREEN_ON -> {
-                        if (SettingsFragmentCompat.isOpenOnClock && checkIsClock(context))
+                        if (SettingsFragmentCompat.isOpenOnClock &&
+                            checkIsClock(context) &&
+                            checkIsCharging(context)
+                        )
                             openChargeAnim(context)
                     }
                 }
