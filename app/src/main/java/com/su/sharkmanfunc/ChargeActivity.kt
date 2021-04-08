@@ -6,6 +6,9 @@ import android.graphics.Typeface
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.AbsoluteSizeSpan
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
@@ -38,7 +41,7 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
         val tf = Typeface.createFromAsset(assets, "fonts/bshark_bold.ttf")
         info.typeface = tf
 
-        info.text = "${BatteryBroadCastReceiver.firstBattery}%"
+        setBattery(BatteryBroadCastReceiver.firstBattery)
         //视频
         video.apply {
             setVideoURI(Uri.parse("android.resource://${packageName}/${R.raw.wired_quick_charge_video}"))
@@ -87,8 +90,21 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
     }
 
     override fun onPowerChange(battery: Int) {
-        info.text = "$battery%"
+        setBattery(battery)
         if (battery > 99)
             ChargeAudioManager.INS.playCompleted(this)
+    }
+
+    private fun setBattery(battery: Int) {
+        val res = "$battery%"
+        val sp = SpannableString(res).apply {
+            setSpan(
+                AbsoluteSizeSpan(15, true),
+                res.length - 1,
+                res.length,
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+            )
+        }
+        info.text = sp
     }
 }
