@@ -20,7 +20,10 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_charge)
 
-        findViewById<ConstraintLayout>(R.id.charge_top).setOnClickListener { onPowerDisconnected() }
+        findViewById<ConstraintLayout>(R.id.charge_top).setOnClickListener {
+            if (SettingsFragmentCompat.isClickClose)
+                onPowerDisconnected()
+        }
 
         video = findViewById(R.id.video)
         info = findViewById(R.id.charge_info)
