@@ -64,10 +64,6 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
         }
     }
 
-    override fun onBackPressed() {
-        //super.onBackPressed()
-    }
-
     override fun onStop() {
         super.onStop()
         finish()
