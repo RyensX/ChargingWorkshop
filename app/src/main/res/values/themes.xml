@@ -25,5 +25,6 @@
     <style name="ChargeAnimation">
         <item name="android:windowEnterAnimation">@null</item>
         <item name="android:windowExitAnimation">@null</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>

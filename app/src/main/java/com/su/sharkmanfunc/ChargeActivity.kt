@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.VideoView
@@ -62,6 +63,11 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
                         WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
                         (if (SettingsFragmentCompat.isKeepShow) WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON else 0)
             )
+            decorView.also {
+                it.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            }
         }
     }
 
