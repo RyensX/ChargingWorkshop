@@ -37,18 +37,18 @@
             app:iconSpaceReserved="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/charge_boot_start"
-            android:summary="开机时自动启动鲨鲨酱充电守护服务，请注意授予自启权限"
-            android:title="开机自启动"
-            app:iconSpaceReserved="false" />
-
-        <SwitchPreference
             android:defaultValue="true"
             android:dependency="@string/charge_service"
             android:key="@string/charge_click_close"
             android:summary="显示鲨鲨酱时点击即关闭显示"
             android:title="触摸关闭"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/charge_boot_start"
+            android:summary="开机时自动启动鲨鲨酱充电守护服务，请注意授予自启权限"
+            android:title="开机自启动"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
