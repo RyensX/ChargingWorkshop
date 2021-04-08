@@ -66,6 +66,8 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
 
     override fun onStop() {
         super.onStop()
+        ChargeAudioManager.INS.stopMedia()
+        BatteryBroadCastReceiver.removeBatteryListener()
         finish()
     }
 
@@ -74,7 +76,6 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
     }
 
     override fun onPowerDisconnected() {
-        BatteryBroadCastReceiver.removeBatteryListener()
         finish()
     }
 

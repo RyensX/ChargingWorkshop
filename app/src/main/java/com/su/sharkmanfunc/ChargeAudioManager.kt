@@ -82,10 +82,14 @@ class ChargeAudioManager {
 
     fun release() {
         media?.checkApply {
-            stop()
+            stopMedia()
             release()
             media = null
         }
+    }
+
+    fun stopMedia() {
+        media?.stop()
     }
 
     inline fun <T> T.checkApply(block: T.() -> Unit): T {
