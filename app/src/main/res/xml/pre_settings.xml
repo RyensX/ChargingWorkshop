@@ -54,6 +54,17 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="其他"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/is_clear_recent"
+            android:summary="开启后后台将不显示图标，体验更加沉浸"
+            android:title="隐藏最近任务"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="@string/charge_sounds"
         android:title="音频列表"
         app:iconSpaceReserved="false">

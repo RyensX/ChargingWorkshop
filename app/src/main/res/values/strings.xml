@@ -9,4 +9,5 @@
     <string name="charge_click_close">charge_click_close</string>
     <string name="charge_keep_show">charge_keep_show</string>
     <string name="charge_boot_start">charge_boot_start</string>
+    <string name="is_clear_recent">is_clear_recent</string>
 </resources>

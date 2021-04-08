@@ -1,5 +1,6 @@
 package com.su.sharkmanfunc
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
@@ -76,7 +77,22 @@ class SettingsFragmentCompat : PreferenceFragmentCompat() {
                 }
         }
 
+        findPreference<SwitchPreference>(getString(R.string.is_clear_recent))?.apply {
+            setTaskRecent(requireContext(), isChecked)
+            onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    if (it is SwitchPreference)
+                        setTaskRecent(requireContext(), isChecked)
+                    true
+                }
+        }
+
         initSounds()
+    }
+
+    private inline fun setTaskRecent(context: Context, isClear: Boolean) {
+        val am = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        am.appTasks?.get(0)?.setExcludeFromRecents(isClear)
     }
 
     private fun initSounds() {
