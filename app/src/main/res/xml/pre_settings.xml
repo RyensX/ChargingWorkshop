@@ -29,6 +29,14 @@
             app:iconSpaceReserved="false" />
 
         <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="@string/charge_service"
+            android:key="@string/charge_keep_show"
+            android:summary="也许你想一直看着鲨鲨酱，但请注意耗电和屏幕损耗"
+            android:title="动画常亮"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreference
             android:defaultValue="true"
             android:dependency="@string/charge_service"
             android:key="@string/charge_click_close"

@@ -13,6 +13,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat() {
         var isEnableAudio = false
         var isClickClose = true
         var isOpenOnClock = false
+        var isKeepShow = false
         private const val SOUNDS_PATH = "sounds"
     }
 
@@ -61,6 +62,16 @@ class SettingsFragmentCompat : PreferenceFragmentCompat() {
                 Preference.OnPreferenceClickListener {
                     if (it is SwitchPreference)
                         isOpenOnClock = it.isChecked
+                    true
+                }
+        }
+
+        findPreference<SwitchPreference>(getString(R.string.charge_keep_show))?.apply {
+            isKeepShow = isChecked
+            onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    if (it is SwitchPreference)
+                        isKeepShow = it.isChecked
                     true
                 }
         }
