@@ -25,7 +25,7 @@
             android:dependency="@string/charge_service"
             android:key="@string/charge_screen_on_open"
             android:summary="锁屏状态下亮屏显示动画，有效拯救你的插口"
-            android:title="亮屏时显示"
+            android:title="亮屏守护"
             app:iconSpaceReserved="false" />
 
         <SwitchPreference
@@ -33,7 +33,7 @@
             android:dependency="@string/charge_service"
             android:key="@string/charge_keep_show"
             android:summary="也许你想一直看着鲨鲨酱，但请注意耗电和屏幕损耗"
-            android:title="动画常亮"
+            android:title="守护常亮"
             app:iconSpaceReserved="false" />
 
         <SwitchPreference
@@ -48,7 +48,7 @@
             android:dependency="@string/charge_service"
             android:key="@string/charge_click_close"
             android:summary="显示鲨鲨酱时点击即关闭显示"
-            android:title="点击关闭"
+            android:title="触摸关闭"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
