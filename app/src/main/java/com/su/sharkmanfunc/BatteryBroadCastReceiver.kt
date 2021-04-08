@@ -29,6 +29,7 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
             addAction(Intent.ACTION_POWER_DISCONNECTED)
             addAction(Intent.ACTION_POWER_CONNECTED)
             addAction(Intent.ACTION_BATTERY_CHANGED)
+            addAction(Intent.ACTION_SCREEN_ON)
         }.also {
             context.registerReceiver(this, it)
         }
@@ -40,9 +41,7 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
                 when (action) {
                     Intent.ACTION_POWER_CONNECTED -> {
                         listener?.onPowerConnected()
-                        Intent(context, ChargeActivity::class.java).apply {
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                        }.also { context.startActivity(it) }
+                        openChargeAnim(context)
                         //Toast.makeText(context, "插入充电器", Toast.LENGTH_LONG).show()
                     }
                     Intent.ACTION_POWER_DISCONNECTED -> {
@@ -59,9 +58,19 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
                                 }
                         }
                     }
+                    Intent.ACTION_SCREEN_ON -> {
+                        if (SettingsFragmentCompat.isOpenOnClock && checkIsClock(context))
+                            openChargeAnim(context)
+                    }
                 }
             }
         }
+    }
+
+    private inline fun openChargeAnim(context: Context) {
+        Intent(context, ChargeActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+        }.also { context.startActivity(it) }
     }
 
     interface BatteryListener {

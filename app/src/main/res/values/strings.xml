@@ -5,5 +5,6 @@
     <string name="charge_is_audio">charge_is_audio</string>
     <string name="charge_ho_bias">charge_ho_bias</string>
     <string name="charge_sounds">charge_sounds</string>
+    <string name="charge_screen_on_open">charge_screen_on_open</string>
     <string name="charge_click_close">charge_click_close</string>
 </resources>

@@ -21,6 +21,14 @@
             app:iconSpaceReserved="false" />
 
         <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="@string/charge_service"
+            android:key="@string/charge_screen_on_open"
+            android:summary="锁屏状态下亮屏显示动画，有效拯救你的插口"
+            android:title="亮屏时显示"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreference
             android:defaultValue="true"
             android:dependency="@string/charge_service"
             android:key="@string/charge_click_close"
@@ -31,9 +39,9 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="@string/charge_sounds"
         android:title="音频列表"
-        app:iconSpaceReserved="false"
-        android:key="@string/charge_sounds">
+        app:iconSpaceReserved="false">
 
     </PreferenceCategory>
 </PreferenceScreen>
