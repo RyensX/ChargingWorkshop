@@ -2,18 +2,23 @@ package com.su.sharkmanfunc
 
 import android.app.KeyguardManager
 import android.content.Context
+import android.graphics.Paint
 import android.graphics.Typeface
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextPaint
 import android.text.style.AbsoluteSizeSpan
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.VideoView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import kotlin.math.ceil
 
 class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryListener {
 
@@ -33,6 +38,7 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
         info = findViewById(R.id.charge_info)
 
         chargeData()
+        setDimension()
         chargeConfig()
     }
 
@@ -53,6 +59,35 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
         //音频
         ChargeAudioManager.INS.play(applicationContext, BatteryBroadCastReceiver.firstBattery)
     }
+
+    private fun setDimension() {
+        //视频比例
+        val videoProportion = 1f
+        val screenWidth = resources.displayMetrics.widthPixels
+        val screenHeight = resources.displayMetrics.heightPixels
+        val screenProportion = screenHeight.toFloat() / screenWidth.toFloat()
+        val lp: ViewGroup.LayoutParams = video.layoutParams
+        if (videoProportion < screenProportion) {
+            lp.height = screenHeight
+            lp.width = (screenHeight.toFloat() / videoProportion).toInt()
+        } else {
+            lp.width = screenWidth
+            lp.height = (screenWidth.toFloat() * videoProportion).toInt()
+        }
+        video.layoutParams = lp
+        //电量位置
+        val clp = info.layoutParams as ConstraintLayout.LayoutParams
+        val size = info.textSize
+        clp.apply {
+            val fm = Paint().apply {
+                textSize = size
+            }.fontMetrics
+            val textHeight = (ceil(fm.descent - fm.top) + size).toInt()
+            //UP_TODO 2021/4/9 3:40 0 这里的算法可能还需要进一步优化
+            verticalBias = 0.153f - textHeight * 1f / screenHeight / 4
+        }
+    }
+
 
     private fun chargeConfig() {
         BatteryBroadCastReceiver.addBatteryListener(this)
