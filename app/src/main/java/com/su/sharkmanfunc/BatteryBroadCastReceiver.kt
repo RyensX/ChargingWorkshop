@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
-import android.util.Log
-import android.widget.Toast
 
 class BatteryBroadCastReceiver : BroadcastReceiver() {
 
@@ -14,22 +12,6 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
         private var listener: BatteryListener? = null
 
         var firstBattery = 0
-
-        fun checkIsCharging(context: Context): Boolean {
-            val bc = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-            return bc?.let { it.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1) != 0 } ?: false
-        }
-
-        /**
-         * 获取电压(mV)
-         */
-        fun getChargeVoltage(context: Context): Int {
-            val bc = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-            return bc?.getIntExtra(
-                BatteryManager.EXTRA_VOLTAGE,
-                BatteryManager.BATTERY_HEALTH_UNKNOWN
-            ) ?: -1
-        }
 
         fun addBatteryListener(listener: BatteryListener) {
             this.listener = listener
@@ -77,7 +59,7 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
                     Intent.ACTION_SCREEN_ON -> {
                         if (SettingsFragmentCompat.isOpenOnClock &&
                             checkIsClock(context) &&
-                            checkIsCharging(context)
+                            PhoneUtils.checkIsCharging(context)
                         )
                             openChargeAnim(context)
                     }
