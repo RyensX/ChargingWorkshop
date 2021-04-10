@@ -38,8 +38,12 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
             intent?.action?.also { action ->
                 when (action) {
                     Intent.ACTION_POWER_CONNECTED -> {
-                        listener?.onPowerConnected()
-                        openChargeAnim(context)
+                        if (!SettingsFragmentCompat.isNotOpenOnFull ||
+                            !PhoneUtils.checkIsOnFullScreen(context)
+                        ) {
+                            listener?.onPowerConnected()
+                            openChargeAnim(context)
+                        }
                         //Toast.makeText(context, "插入充电器", Toast.LENGTH_LONG).show()
                     }
                     Intent.ACTION_POWER_DISCONNECTED -> {

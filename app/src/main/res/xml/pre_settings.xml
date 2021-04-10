@@ -45,6 +45,13 @@
             app:iconSpaceReserved="false" />
 
         <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/is_not_open_on_full"
+            android:summary="当手机全屏时插入充电器不弹出动画"
+            android:title="勿扰模式"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreference
             android:defaultValue="false"
             android:key="@string/charge_boot_start"
             android:summary="开机时自动启动鲨鲨酱充电守护服务，请注意授予自启权限"

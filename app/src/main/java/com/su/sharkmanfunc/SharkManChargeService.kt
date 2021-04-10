@@ -41,6 +41,7 @@ class SharkManChargeService : Service() {
         super.onCreate()
         configBattery()
         isOpen = true
+        PhoneUtils.checkIsOnFullScreen(this)
     }
 
     private fun configBattery() {

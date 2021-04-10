@@ -15,6 +15,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat() {
         var isClickClose = true
         var isOpenOnClock = false
         var isKeepShow = false
+        var isNotOpenOnFull = true
         private const val SOUNDS_PATH = "sounds"
     }
 
@@ -83,6 +84,16 @@ class SettingsFragmentCompat : PreferenceFragmentCompat() {
                 Preference.OnPreferenceClickListener {
                     if (it is SwitchPreference)
                         setTaskRecent(requireContext(), isChecked)
+                    true
+                }
+        }
+
+        findPreference<SwitchPreference>(getString(R.string.is_not_open_on_full))?.apply {
+            isNotOpenOnFull = isChecked
+            onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    if (it is SwitchPreference)
+                        isNotOpenOnFull = it.isChecked
                     true
                 }
         }

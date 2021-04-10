@@ -10,4 +10,5 @@
     <string name="charge_keep_show">charge_keep_show</string>
     <string name="charge_boot_start">charge_boot_start</string>
     <string name="is_clear_recent">is_clear_recent</string>
+    <string name="is_not_open_on_full">is_not_open_on_full</string>
 </resources>
