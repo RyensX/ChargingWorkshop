@@ -44,6 +44,12 @@ android {
                     }
             }
     }
+
+    aaptOptions {
+        noCompress "ogg"
+        noCompress "mp3"
+        noCompress "mp4"
+    }
 }
 
 repositories { flatDir { dirs 'libs' } }
