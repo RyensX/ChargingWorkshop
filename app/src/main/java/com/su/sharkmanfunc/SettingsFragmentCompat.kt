@@ -111,11 +111,11 @@ class SettingsFragmentCompat : PreferenceFragmentCompat() {
             try {
                 val am = context.assets
                 val list = am.list(SOUNDS_PATH)
-                var index = 1
+                val suffixRegex = Regex("\\..+")
                 list?.forEach {
                     Log.d("文件", it)
                     val pre = SoundPreference(requireContext(), "${SOUNDS_PATH}/$it").apply {
-                        title = "音频${index++}"
+                        title = it.replace(suffixRegex, "")
                         isIconSpaceReserved = false
                     }
                     addPreference(pre)
