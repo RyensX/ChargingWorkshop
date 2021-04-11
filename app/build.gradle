@@ -68,4 +68,8 @@ dependencies {
     implementation group: 'androidx.preference', name: 'preference', version: '1.1.0'
     //全局异常捕捉
     implementation(name: 'appcrashhandler-release', ext: 'aar')
+    //协程
+    def coroutines_version = "1.4.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 }

@@ -2,13 +2,67 @@ package com.su.sharkmanfunc
 
 import android.content.Context
 import android.media.MediaPlayer
-import android.net.Uri
 import android.util.Log
+
 
 class ChargeAudioManager {
 
     companion object {
         val INS by lazy { ChargeAudioManager() }
+
+        private val flagBuffer by lazy { HashMap<String, String>() }
+
+        fun buffFlags(pre: SoundPreference) {
+            if (pre.audioFlags.size > 0) {
+                val sb = StringBuilder()
+                pre.audioFlags.forEach {
+                    sb.append(it.ordinal).append(" ")
+                }
+                sb.removeSuffix(" ")
+                val data = sb.toString()
+                flagBuffer[pre.title.toString()] = data
+            } else
+                flagBuffer.remove(pre.title.toString())
+        }
+
+        fun saveFlags(context: Context) {
+            //构建数据
+            val sb = StringBuilder()
+            flagBuffer.forEach {
+                sb.append(it.key)
+                    .append(" ")
+                    .append(it.value)
+                    .append("\n")
+            }
+            sb.removeSuffix("\n")
+            //保持到SP
+            val sp = PhoneUtils.getDefaultSharedPreferences(context)
+            sp.edit().apply {
+                putString(context.getString(R.string.audio_flags), sb.toString())
+                apply()
+            }
+        }
+
+        fun getFlags(context: Context): HashMap<String, IntArray>? {
+            PhoneUtils.getDefaultSharedPreferences(context)
+                .getString(context.getString(R.string.audio_flags), "")
+                ?.also { data ->
+                    Log.d("Flag数据", data)
+                    val result = HashMap<String, IntArray>()
+                    data.reader().readLines().forEach {
+                        val dataArray = it.split(" ")
+                        val flags = mutableListOf<Int>()
+                        for (i in 1 until dataArray.size) {
+                            val temp = dataArray[i].trim()
+                            if (temp != "")
+                                flags.add(temp.toInt())
+                        }
+                        result[dataArray[0]] = flags.toIntArray()
+                    }
+                    return result
+                }
+            return null
+        }
     }
 
     private var media: MediaPlayer? = null

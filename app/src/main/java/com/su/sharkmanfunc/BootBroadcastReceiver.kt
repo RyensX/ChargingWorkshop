@@ -10,10 +10,7 @@ class BootBroadcastReceiver : BroadcastReceiver() {
         intent?.action.also { result ->
             if (result == Intent.ACTION_BOOT_COMPLETED) {
                 context?.apply {
-                    val sp = getSharedPreferences(
-                        "${context.packageName}_preferences",
-                        Context.MODE_PRIVATE
-                    )
+                    val sp = PhoneUtils.getDefaultSharedPreferences(context)
                     if (sp.getBoolean(getString(R.string.charge_boot_start), false))
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                             startForegroundService(Intent(this, SharkManChargeService::class.java))

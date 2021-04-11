@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Context.WINDOW_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.BatteryManager
@@ -16,6 +17,12 @@ import android.view.WindowManager
 
 @SuppressLint("StaticFieldLeak")
 object PhoneUtils {
+
+    inline fun getDefaultSharedPreferences(context: Context): SharedPreferences =
+        context.getSharedPreferences(
+            "${context.packageName}_preferences",
+            Context.MODE_PRIVATE
+        )
 
     private var checkFullView: View? = null
 
@@ -67,9 +74,9 @@ object PhoneUtils {
         val local = IntArray(2)
         checkFullView!!.getLocationOnScreen(local)
         local.forEach { Log.d("数据", it.toString()) }
-        val rect= Rect()
+        val rect = Rect()
         checkFullView!!.getGlobalVisibleRect(rect)
-        Log.d("数据2","${rect.left} ${rect.right}")
+        Log.d("数据2", "${rect.left} ${rect.right}")
         return local[1] == 0
     }
 }

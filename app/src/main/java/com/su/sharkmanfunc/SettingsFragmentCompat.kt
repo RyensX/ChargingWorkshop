@@ -10,6 +10,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferenceClickListener {
@@ -114,22 +118,39 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
 
     private fun initSounds() {
         findPreference<PreferenceCategory>(getString(R.string.charge_sounds))?.apply {
-            try {
-                val am = context.assets
-                val list = am.list(SOUNDS_PATH)
-                val suffixRegex = Regex("\\..+")
-                list?.forEach {
-                    Log.d("文件", it)
-                    val pre = SoundPreference(requireContext(), "${SOUNDS_PATH}/$it").apply {
-                        title = it.replace(suffixRegex, "")
-                        isIconSpaceReserved = false
-                    }
-                    pre.onPreferenceClickListener = this@SettingsFragmentCompat
-                    addPreference(pre)
-                }
-            } catch (e: Exception) {
+            MainScope().launch {
+                withContext(Dispatchers.IO) {
+                    ChargeAudioManager.getFlags(context)
+                }.also { flagData ->
+                    withContext(Dispatchers.IO) {
+                        val am = context.assets
+                        am.list(SOUNDS_PATH)
+                    }.also { list ->
+                        val flags=SoundPreference.AudioFlag.values()
+                        try {
+                            val suffixRegex = Regex("\\..+")
+                            list?.forEach {
+                                //创建音频Preference
+                                Log.d("文件", it)
+                                val pre =
+                                    SoundPreference(requireContext(), "${SOUNDS_PATH}/$it").apply {
+                                        title = it.replace(suffixRegex, "")
+                                        isIconSpaceReserved = false
+                                    }
+                                pre.onPreferenceClickListener = this@SettingsFragmentCompat
+                                //读取音频Flag设置
+                                flagData?.get(pre.title)?.forEach { flag->
+                                    pre.changeFlag(flags[flag])
+                                }
 
+                                addPreference(pre)
+                            }
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
             }
+
         }
     }
 
@@ -146,6 +167,11 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     ?.findViewById<TextView>(android.R.id.title)?.text
             }"
         )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        ChargeAudioManager.saveFlags(requireContext())
     }
 
     private var lastClickPreference: SoundPreference? = null
