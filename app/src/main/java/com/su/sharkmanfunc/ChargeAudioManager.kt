@@ -3,6 +3,10 @@ package com.su.sharkmanfunc
 import android.content.Context
 import android.media.MediaPlayer
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class ChargeAudioManager {
@@ -26,20 +30,24 @@ class ChargeAudioManager {
         }
 
         fun saveFlags(context: Context) {
-            //构建数据
-            val sb = StringBuilder()
-            flagBuffer.forEach {
-                sb.append(it.key)
-                    .append(" ")
-                    .append(it.value)
-                    .append("\n")
-            }
-            sb.removeSuffix("\n")
-            //保持到SP
-            val sp = PhoneUtils.getDefaultSharedPreferences(context)
-            sp.edit().apply {
-                putString(context.getString(R.string.audio_flags), sb.toString())
-                apply()
+            MainScope().launch {
+                withContext(Dispatchers.IO) {
+                    //构建数据
+                    val sb = StringBuilder()
+                    flagBuffer.forEach {
+                        sb.append(it.key)
+                            .append(" ")
+                            .append(it.value)
+                            .append("\n")
+                    }
+                    sb.removeSuffix("\n")
+                    //保持到SP
+                    val sp = PhoneUtils.getDefaultSharedPreferences(context)
+                    sp.edit().apply {
+                        putString(context.getString(R.string.audio_flags), sb.toString())
+                        apply()
+                    }
+                }
             }
         }
 
