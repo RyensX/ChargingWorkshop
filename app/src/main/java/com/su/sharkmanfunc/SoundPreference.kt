@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 
-class SoundPreference(context: Context, soundPath: String) : Preference(context) {
+class SoundPreference(context: Context, val soundPath: String) : Preference(context) {
 
     private var flagView: TextView? = null
 
-    private val audioFlags = mutableSetOf<AudioFlag>()
+    val audioFlags = mutableSetOf<AudioFlag>()
 
     companion object {
         private var media: MediaPlayer? = null
@@ -35,6 +35,7 @@ class SoundPreference(context: Context, soundPath: String) : Preference(context)
             }
         setOnPreferenceClickListener {
             audioFlags.add(AudioFlag.values().let { it[it.indices.random()] })
+            ChargeAudioManager.INS.syncAudio(this)
             syncFlags()
             media?.apply {
                 Log.d("播放", soundPath)

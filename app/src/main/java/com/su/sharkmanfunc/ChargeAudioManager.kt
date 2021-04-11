@@ -23,6 +23,24 @@ class ChargeAudioManager {
     private val offBattery = R.raw.off
     private val completeCharge = R.raw.completed
 
+    private val audioMap =
+        mutableMapOf(
+            SoundPreference.AudioFlag.LOW to mutableListOf<String>(),
+            SoundPreference.AudioFlag.MEDIUM to mutableListOf(),
+            SoundPreference.AudioFlag.HIGHT to mutableListOf(),
+            SoundPreference.AudioFlag.FULL to mutableListOf(),
+            SoundPreference.AudioFlag.HIGHT to mutableListOf()
+        )
+
+    fun syncAudio(pre: SoundPreference) {
+        pre.audioFlags.forEach { flag ->
+            audioMap[flag]?.apply {
+                remove(pre.soundPath)
+                add(pre.soundPath)
+            }
+        }
+    }
+
     private fun getMediaIns() = MediaPlayer().apply {
         setOnPreparedListener {
             start()
