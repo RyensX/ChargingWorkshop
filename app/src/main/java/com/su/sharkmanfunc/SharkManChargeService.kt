@@ -59,7 +59,7 @@ class SharkManChargeService : Service() {
 
         ChargeAudioManager.INS.release()
 
-        SettingsFragmentCompat.SoundPreference.releaseMedia()
+        SoundPreference.releaseMedia()
         super.onDestroy()
     }
 }
