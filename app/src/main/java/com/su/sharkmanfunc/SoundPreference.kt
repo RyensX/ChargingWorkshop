@@ -10,8 +10,6 @@ import androidx.preference.PreferenceViewHolder
 
 class SoundPreference(context: Context, val soundPath: String) : Preference(context) {
 
-    var clickListener: OnPreferenceClickListener? = null
-
     private var flagView: TextView? = null
 
     val audioFlags = mutableSetOf<AudioFlag>()
@@ -35,20 +33,16 @@ class SoundPreference(context: Context, val soundPath: String) : Preference(cont
                     start()
                 }
             }
-        setOnPreferenceClickListener {
-            clickListener?.onPreferenceClick(it)
-            audioFlags.add(AudioFlag.values().let { it[it.indices.random()] })
-            ChargeAudioManager.INS.syncAudio(this)
-            syncFlags()
-            media?.apply {
-                Log.d("播放", soundPath)
-                val am = context.assets.openFd(soundPath)
-                stop()
-                reset()
-                setDataSource(am.fileDescriptor, am.startOffset, am.length)
-                prepareAsync()
-            }
-            true
+    }
+
+    fun playAudio() {
+        media?.apply {
+            Log.d("播放", soundPath)
+            val am = context.assets.openFd(soundPath)
+            stop()
+            reset()
+            setDataSource(am.fileDescriptor, am.startOffset, am.length)
+            prepareAsync()
         }
     }
 
@@ -65,7 +59,7 @@ class SoundPreference(context: Context, val soundPath: String) : Preference(cont
         }
     }
 
-    private fun syncFlags() {
+    fun syncFlags() {
         if (audioFlags.size > 0) {
             val sb = StringBuilder()
             sb.append("( ")
@@ -77,6 +71,7 @@ class SoundPreference(context: Context, val soundPath: String) : Preference(cont
             flagView!!.text = sb.toString()
         } else
             flagView!!.text = ""
+        ChargeAudioManager.INS.syncAudio(this)
     }
 
     enum class AudioFlag(val flag: String) {

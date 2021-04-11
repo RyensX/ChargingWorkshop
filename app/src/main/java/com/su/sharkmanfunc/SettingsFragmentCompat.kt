@@ -2,15 +2,17 @@ package com.su.sharkmanfunc
 
 import android.app.ActivityManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
-import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
 
-class SettingsFragmentCompat : PreferenceFragmentCompat() {
+
+class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferenceClickListener {
 
     companion object {
         var isEnableAudio = false
@@ -122,6 +124,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat() {
                         title = it.replace(suffixRegex, "")
                         isIconSpaceReserved = false
                     }
+                    pre.onPreferenceClickListener = this@SettingsFragmentCompat
                     addPreference(pre)
                 }
             } catch (e: Exception) {
@@ -143,6 +146,35 @@ class SettingsFragmentCompat : PreferenceFragmentCompat() {
                     ?.findViewById<TextView>(android.R.id.title)?.text
             }"
         )
+    }
+
+    private var lastClickPreference: SoundPreference? = null
+    private val chooseDialog by lazy {
+        val items =
+            arrayOf(
+                "播放",
+                *SoundPreference.AudioFlag.values().map { "设置为\"${it.flag}\"音频" }.toTypedArray()
+            )
+        val listDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        listDialog.setTitle("操作")
+        listDialog.setItems(
+            items
+        ) { _, which ->
+            lastClickPreference?.apply {
+                if (which == 0)
+                    playAudio()
+                else {
+                    audioFlags.add(SoundPreference.AudioFlag.values()[which - 1])
+                    syncFlags()
+                }
+            }
+        }
+    }
+
+    override fun onPreferenceClick(preference: Preference?): Boolean {
+        lastClickPreference = preference as SoundPreference?
+        chooseDialog.show()
+        return true
     }
 
 }
