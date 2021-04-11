@@ -91,6 +91,19 @@ class ChargeAudioManager {
             SoundPreference.AudioFlag.DISCONNECT to mutableListOf()
         )
 
+    fun printAudioMap() {
+        println("########测速数据#########")
+        audioMap.forEach { data ->
+            Log.d("Flag=", data.key.name)
+            val sb = StringBuilder()
+            data.value.forEach {
+                sb.append(it).append(" ")
+            }
+            Log.d("数据", sb.toString())
+        }
+        println("#####################")
+    }
+
     fun syncAudio(pre: SoundPreference) {
         MainScope().launch {
             withContext(Dispatchers.IO) {
@@ -108,6 +121,8 @@ class ChargeAudioManager {
                 pre.audioFlags.forEach { flag ->
                     audioMap[flag]?.add(pre.soundPath)
                 }
+            }.also {
+                printAudioMap()
             }
         }
     }
