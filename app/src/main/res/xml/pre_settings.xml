@@ -61,6 +61,13 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="@string/charge_sounds"
+        android:title="音频设置"
+        app:iconSpaceReserved="false">
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="其他"
         app:iconSpaceReserved="false">
         <SwitchPreference
@@ -71,10 +78,4 @@
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="@string/charge_sounds"
-        android:title="音频列表"
-        app:iconSpaceReserved="false">
-
-    </PreferenceCategory>
 </PreferenceScreen>
