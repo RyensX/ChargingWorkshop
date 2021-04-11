@@ -18,11 +18,6 @@ class ChargeAudioManager {
             return field
         }
 
-    private val lowBattery = arrayOf(R.raw.low_1, R.raw.low_2)
-    private val normalBattery = arrayOf(R.raw.charging_1, R.raw.charging_2)
-    private val offBattery = R.raw.off
-    private val completeCharge = R.raw.completed
-
     private val audioMap =
         mutableMapOf(
             SoundPreference.AudioFlag.LOW to mutableListOf<String>(),
@@ -59,44 +54,33 @@ class ChargeAudioManager {
     }
 
     fun playLow(context: Context) {
-        media?.checkApply {
-            reset()
-            setDataSource(context, getRandomAudio(context, lowBattery))
-            prepare()
-            start()
-        }
+        playAudio(context, SoundPreference.AudioFlag.LOW)
     }
 
     fun playNormal(context: Context) {
-        media?.checkApply {
-            reset()
-            setDataSource(context, getRandomAudio(context, normalBattery))
-            prepareAsync()
-        }
-
+        playAudio(context, SoundPreference.AudioFlag.MEDIUM)
     }
 
     fun playOff(context: Context) {
-        media?.checkApply {
-            reset()
-            setDataSource(context, getRawFileUrl(context, offBattery))
-            prepareAsync()
-        }
+        playAudio(context, SoundPreference.AudioFlag.LOW)
     }
 
     fun playCompleted(context: Context) {
-        media?.checkApply {
-            reset()
-            setDataSource(context, getRawFileUrl(context, completeCharge))
-            prepareAsync()
-        }
+        playAudio(context, SoundPreference.AudioFlag.FULL)
     }
 
-    private inline fun getRandomAudio(context: Context, array: Array<Int>) =
-        getRawFileUrl(context, array[(array.indices).random()])
-
-    private inline fun getRawFileUrl(context: Context, id: Int) =
-        Uri.parse("android.resource://${context.packageName}/${id}")
+    private fun playAudio(context: Context, flag: SoundPreference.AudioFlag) {
+        media?.checkApply {
+            audioMap[flag]?.also {
+                if (it.size > 0) {
+                    reset()
+                    val am = context.assets.openFd(it[it.indices.random()])
+                    setDataSource(am.fileDescriptor, am.startOffset, am.length)
+                    prepareAsync()
+                }
+            }
+        }
+    }
 
     fun release() {
         media?.checkApply {
