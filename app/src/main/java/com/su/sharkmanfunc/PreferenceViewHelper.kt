@@ -46,7 +46,7 @@ class PreferenceViewHelper {
     }
 
     fun getPreferenceView(pff: PreferenceFragmentCompat, pre: Preference) =
-        pff.listView.layoutManager?.findViewByPosition(getPreferenceGlobalIndex(pff, pre))
+        pff.listView?.layoutManager?.findViewByPosition(getPreferenceGlobalIndex(pff, pre))
 
     fun release() {
         preferenceInsMap.clear()

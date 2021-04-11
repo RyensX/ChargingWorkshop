@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="关于"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:summary="免费娱乐软件，仅供学习交流"
+            android:title="声明"
+            app:iconSpaceReserved="false" />
+        <Preference
+            android:summary="B站/酷安@Ryens"
+            android:title="开发者"
+            app:iconSpaceReserved="false" />
+        <Preference
+            android:summary="点击跳转，欢迎五连支持"
+            android:title="教程/演示"
+            app:iconSpaceReserved="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/b_video_url" />
+        </Preference>
+    </PreferenceCategory>
     <PreferenceCategory
         android:title="充电相关"
         app:iconSpaceReserved="false">

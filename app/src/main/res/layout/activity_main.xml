@@ -12,22 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="Hello World!"
-        app:layout_constraintBottom_toTopOf="@id/version"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:gravity="center"
-        android:autoLink="all"
-        android:text="免费娱乐软件，仅供学习交流\n\nhttps://b23.tv/BV1iA41157NL\n\nPowered by Ryens"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
