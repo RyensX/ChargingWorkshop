@@ -164,7 +164,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                 if (which == 0)
                     playAudio()
                 else {
-                    audioFlags.add(SoundPreference.AudioFlag.values()[which - 1])
+                    changeFlag(SoundPreference.AudioFlag.values()[which - 1])
                     syncFlags()
                 }
             }

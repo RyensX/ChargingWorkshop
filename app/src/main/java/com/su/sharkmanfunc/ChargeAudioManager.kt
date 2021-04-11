@@ -44,10 +44,10 @@ class ChargeAudioManager {
 
     fun play(context: Context, battery: Int) {
         media?.also {
-            when {
-                battery in 0..20 -> playLow(context)
-                battery in 21..70 -> playMedium(context)
-                battery in 71..99 -> playHigh(context)
+            when (battery) {
+                in 0..20 -> playLow(context)
+                in 21..70 -> playMedium(context)
+                in 71..99 -> playHigh(context)
                 else -> playFull(context)
             }
         }

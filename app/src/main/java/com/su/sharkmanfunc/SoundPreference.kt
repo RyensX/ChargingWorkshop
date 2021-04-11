@@ -59,6 +59,13 @@ class SoundPreference(context: Context, val soundPath: String) : Preference(cont
         }
     }
 
+    fun changeFlag(flag: AudioFlag) {
+        if (audioFlags.contains(flag))
+            audioFlags.remove(flag)
+        else
+            audioFlags.add(flag)
+    }
+
     fun syncFlags() {
         if (audioFlags.size > 0) {
             val sb = StringBuilder()
