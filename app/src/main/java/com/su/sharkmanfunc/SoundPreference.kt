@@ -77,6 +77,6 @@ class SoundPreference(context: Context, val soundPath: String) : Preference(cont
     }
 
     enum class AudioFlag(val flag: String) {
-        LOW("低电量"), MEDIUM("中电量"), HIGHT("高电量"), FULL("充满"), DISCONNECT("拔出")
+        LOW("低电量"), MEDIUM("中电量"), HIGH("高电量"), FULL("充满"), DISCONNECT("拔出")
     }
 }

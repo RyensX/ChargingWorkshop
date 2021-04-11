@@ -22,9 +22,9 @@ class ChargeAudioManager {
         mutableMapOf(
             SoundPreference.AudioFlag.LOW to mutableListOf<String>(),
             SoundPreference.AudioFlag.MEDIUM to mutableListOf(),
-            SoundPreference.AudioFlag.HIGHT to mutableListOf(),
+            SoundPreference.AudioFlag.HIGH to mutableListOf(),
             SoundPreference.AudioFlag.FULL to mutableListOf(),
-            SoundPreference.AudioFlag.HIGHT to mutableListOf()
+            SoundPreference.AudioFlag.DISCONNECT to mutableListOf()
         )
 
     fun syncAudio(pre: SoundPreference) {
