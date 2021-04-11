@@ -150,7 +150,6 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     }
                 }
             }
-
         }
     }
 

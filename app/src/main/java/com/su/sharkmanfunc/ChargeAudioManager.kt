@@ -90,10 +90,22 @@ class ChargeAudioManager {
         )
 
     fun syncAudio(pre: SoundPreference) {
-        pre.audioFlags.forEach { flag ->
-            audioMap[flag]?.apply {
-                remove(pre.soundPath)
-                add(pre.soundPath)
+        MainScope().launch {
+            withContext(Dispatchers.IO) {
+                //移除
+                audioMap.forEach { audio ->
+                    var isEx = false
+                    audio.value.forEach { path ->
+                        if (path == pre.soundPath)
+                            isEx = true
+                    }
+                    if (isEx && !pre.audioFlags.contains(audio.key))
+                        audio.value.remove(pre.soundPath)
+                }
+                //添加
+                pre.audioFlags.forEach { flag ->
+                    audioMap[flag]?.add(pre.soundPath)
+                }
             }
         }
     }
