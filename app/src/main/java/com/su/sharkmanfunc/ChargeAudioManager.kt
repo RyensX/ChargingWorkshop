@@ -69,6 +69,10 @@ class ChargeAudioManager {
         playAudio(context, SoundPreference.AudioFlag.FULL)
     }
 
+    fun playDisconnect(context: Context) {
+        playAudio(context, SoundPreference.AudioFlag.DISCONNECT)
+    }
+
     private fun playAudio(context: Context, flag: SoundPreference.AudioFlag) {
         media?.checkApply {
             audioMap[flag]?.also {

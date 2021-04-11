@@ -48,6 +48,7 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
                     }
                     Intent.ACTION_POWER_DISCONNECTED -> {
                         listener?.onPowerDisconnected()
+                        ChargeAudioManager.INS.playDisconnect(context)
                         //Toast.makeText(context,"拔出充电器",Toast.LENGTH_LONG).show()
                     }
                     Intent.ACTION_BATTERY_CHANGED -> {
