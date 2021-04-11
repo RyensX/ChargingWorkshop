@@ -65,6 +65,7 @@ class SoundPreference(context: Context, val soundPath: String) : Preference(cont
         else
             audioFlags.add(flag)
         ChargeAudioManager.buffFlags(this)
+        ChargeAudioManager.INS.syncAudio(this)
     }
 
     fun syncFlags() {
@@ -79,7 +80,6 @@ class SoundPreference(context: Context, val soundPath: String) : Preference(cont
             flagView!!.text = sb.toString()
         } else
             flagView!!.text = ""
-        ChargeAudioManager.INS.syncAudio(this)
     }
 
     enum class AudioFlag(val flag: String) {

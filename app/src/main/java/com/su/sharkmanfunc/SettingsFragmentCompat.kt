@@ -126,7 +126,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                         val am = context.assets
                         am.list(SOUNDS_PATH)
                     }.also { list ->
-                        val flags=SoundPreference.AudioFlag.values()
+                        val flags = SoundPreference.AudioFlag.values()
                         try {
                             val suffixRegex = Regex("\\..+")
                             list?.forEach {
@@ -139,9 +139,9 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                                     }
                                 pre.onPreferenceClickListener = this@SettingsFragmentCompat
                                 //读取音频Flag设置
-                                flagData?.get(pre.title)?.forEach { flag->
+                                flagData?.get(pre.title)?.forEach { flag ->
                                     pre.changeFlag(flags[flag])
-                                }
+                                } ?: ChargeAudioManager.INS.syncAudio(pre)
 
                                 addPreference(pre)
                             }
