@@ -22,7 +22,7 @@
                 android:data="@string/b_video_url" />
         </Preference>
     </PreferenceCategory>
-    <PreferenceCategory
+    <com.su.sharkmanfunc.HelpPreferenceCategory
         android:title="充电相关"
         app:iconSpaceReserved="false">
         <SwitchPreference
@@ -79,7 +79,7 @@
             android:title="开机自启动"
             app:iconSpaceReserved="false" />
 
-    </PreferenceCategory>
+    </com.su.sharkmanfunc.HelpPreferenceCategory>
 
     <PreferenceCategory
         android:key="@string/charge_sounds"
