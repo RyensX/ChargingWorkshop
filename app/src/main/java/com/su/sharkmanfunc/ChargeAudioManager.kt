@@ -45,10 +45,10 @@ class ChargeAudioManager {
     fun play(context: Context, battery: Int) {
         media?.also {
             when {
-                battery <= 5 -> playOff(context)
-                battery in 6..20 -> playLow(context)
-                battery in 21..99 -> playNormal(context)
-                else -> playCompleted(context)
+                battery in 0..20 -> playLow(context)
+                battery in 21..70 -> playMedium(context)
+                battery in 71..99 -> playHigh(context)
+                else -> playFull(context)
             }
         }
     }
@@ -57,15 +57,15 @@ class ChargeAudioManager {
         playAudio(context, SoundPreference.AudioFlag.LOW)
     }
 
-    fun playNormal(context: Context) {
+    fun playMedium(context: Context) {
         playAudio(context, SoundPreference.AudioFlag.MEDIUM)
     }
 
-    fun playOff(context: Context) {
-        playAudio(context, SoundPreference.AudioFlag.LOW)
+    fun playHigh(context: Context) {
+        playAudio(context, SoundPreference.AudioFlag.HIGH)
     }
 
-    fun playCompleted(context: Context) {
+    fun playFull(context: Context) {
         playAudio(context, SoundPreference.AudioFlag.FULL)
     }
 

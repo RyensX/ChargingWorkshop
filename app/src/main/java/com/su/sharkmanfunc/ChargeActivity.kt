@@ -127,7 +127,7 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
     override fun onPowerChange(battery: Int) {
         setBattery(battery)
         if (battery > 99)
-            ChargeAudioManager.INS.playCompleted(this)
+            ChargeAudioManager.INS.playFull(this)
     }
 
     private fun setBattery(battery: Int) {
