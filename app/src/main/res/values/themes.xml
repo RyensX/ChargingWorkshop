@@ -14,6 +14,10 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="AlertDialog.AppCompat.Help" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="colorPrimary">@color/teal_200</item>
+    </style>
+
     <style name="Theme.Charge" parent="Theme.SharkManFunc">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>

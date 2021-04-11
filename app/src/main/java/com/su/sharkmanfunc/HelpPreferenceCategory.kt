@@ -2,16 +2,19 @@ package com.su.sharkmanfunc
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceViewHolder
 
 class HelpPreferenceCategory(context: Context, attributes: AttributeSet) :
-    PreferenceCategory(context, attributes) {
+    PreferenceCategory(context, attributes), View.OnClickListener {
 
     private val helpImageView = ImageView(context).apply {
         setImageResource(R.drawable.ic_baseline_help_outline_24)
+        setOnClickListener(this@HelpPreferenceCategory)
         tag = R.drawable.ic_baseline_help_outline_24
     }
 
@@ -23,5 +26,14 @@ class HelpPreferenceCategory(context: Context, attributes: AttributeSet) :
                 if (pa is ViewGroup)
                     pa.addView(helpImageView)
             }
+    }
+
+    override fun onClick(v: View?) {
+        AlertDialog.Builder(context, R.style.AlertDialog_AppCompat_Help)
+            .setTitle("音频设置帮助")
+            .setMessage(R.string.audio_setting_help)
+            .setPositiveButton("我知道了", null)
+            .create()
+            .show()
     }
 }
