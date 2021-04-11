@@ -14,6 +14,8 @@ class ChargeAudioManager {
     companion object {
         val INS by lazy { ChargeAudioManager() }
 
+        private var isClockPlay = false
+
         private val flagBuffer by lazy { HashMap<String, String>() }
 
         fun buffFlags(pre: SoundPreference) {
@@ -114,6 +116,9 @@ class ChargeAudioManager {
         setOnPreparedListener {
             start()
         }
+        setOnCompletionListener {
+            isClockPlay = false
+        }
     }
 
     fun play(context: Context, battery: Int) {
@@ -144,6 +149,7 @@ class ChargeAudioManager {
     }
 
     fun playDisconnect(context: Context) {
+        isClockPlay = true
         playAudio(context, SoundPreference.AudioFlag.DISCONNECT)
     }
 
@@ -169,7 +175,8 @@ class ChargeAudioManager {
     }
 
     fun stopMedia() {
-        media?.stop()
+        if (!isClockPlay)
+            media?.stop()
     }
 
     inline fun <T> T.checkApply(block: T.() -> Unit): T {
