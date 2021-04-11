@@ -36,7 +36,7 @@ class PreferenceViewHelper {
 
     fun getPreferenceGlobalIndex(pff: PreferenceFragmentCompat, pre: Preference): Int {
         var add = 0
-        for (i in 0..pff.preferenceScreen.preferenceCount) {
+        for (i in 0 until pff.preferenceScreen.preferenceCount) {
             val pc = pff.preferenceScreen.getPreference(i) as PreferenceGroup
             if (pc == pre.parent)
                 return getPreferenceLocalIndex(pre) + add + i + 1
