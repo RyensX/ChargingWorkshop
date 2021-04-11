@@ -10,6 +10,8 @@ import androidx.preference.PreferenceViewHolder
 
 class SoundPreference(context: Context, val soundPath: String) : Preference(context) {
 
+    var clickListener: OnPreferenceClickListener? = null
+
     private var flagView: TextView? = null
 
     val audioFlags = mutableSetOf<AudioFlag>()
@@ -34,6 +36,7 @@ class SoundPreference(context: Context, val soundPath: String) : Preference(cont
                 }
             }
         setOnPreferenceClickListener {
+            clickListener?.onPreferenceClick(it)
             audioFlags.add(AudioFlag.values().let { it[it.indices.random()] })
             ChargeAudioManager.INS.syncAudio(this)
             syncFlags()
