@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/per_window_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="1. 悬浮窗权限"
             android:textColor="@color/black"
@@ -49,17 +49,19 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/per_window_desc"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/per_window_req"/>
 
         <TextView
             android:id="@+id/per_window_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="应用上层显示，用于检测全屏和锁屏显示"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/per_window_title"
-            app:layout_constraintTop_toBottomOf="@id/per_window_title" />
+            app:layout_constraintTop_toBottomOf="@id/per_window_title"
+            app:layout_constraintRight_toLeftOf="@id/per_window_req"/>
 
         <Button
             android:id="@+id/per_window_req"
