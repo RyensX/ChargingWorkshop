@@ -38,7 +38,8 @@ class PermissionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private val permissions = mapOf(
         "2. 锁屏显示权限" to "锁屏时支持显示",
-        "3. 后台显示权限" to "在非当前APP界面插入充电器时显示动画"
+        "3. 后台显示权限" to "在非当前APP界面插入充电器时显示动画",
+        "4. 推荐设置" to "锁定后台+关闭电池优化"
     )
 
     override fun onCreateView(
