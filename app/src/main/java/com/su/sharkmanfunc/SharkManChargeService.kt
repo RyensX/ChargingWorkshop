@@ -60,6 +60,8 @@ class SharkManChargeService : Service() {
         ChargeAudioManager.INS.release()
 
         SoundPreference.releaseMedia()
+
+        PhoneUtils.closeFullCheckView(this)
         super.onDestroy()
     }
 }

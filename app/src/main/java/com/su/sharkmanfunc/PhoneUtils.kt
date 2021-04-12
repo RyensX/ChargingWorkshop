@@ -42,6 +42,13 @@ object PhoneUtils {
         ) ?: -1
     }
 
+    fun closeFullCheckView(context: Context) {
+        checkFullView?.also {
+            (context.getSystemService(WINDOW_SERVICE) as WindowManager).removeView(it)
+            checkFullView = null
+        }
+    }
+
     fun checkIsOnFullScreen(context: Context): Boolean {
         if (checkFullView == null) {
             val ac = context.applicationContext
