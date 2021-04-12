@@ -42,9 +42,9 @@ class PermissionBottomSheetFragment(@BottomSheetBehavior.State val bottomSheetSt
     }
 
     private val permissions = mapOf(
-        "2. 锁屏显示权限" to "锁屏时支持显示",
-        "3. 后台显示权限" to "在非当前APP界面插入充电器时显示动画",
-        "4. 推荐设置" to "锁定后台+关闭电池优化"
+        "2. 锁屏显示权限" to "用于提供锁屏显示动画支持",
+        "3. 后台显示权限" to "用于提供在非当前APP和锁屏界面显示动画支持",
+        "4. 推荐设置" to "锁定后台+关闭电池优化，防止被系统杀死"
     )
 
     override fun onCreateView(
