@@ -13,7 +13,7 @@ class App : Application() {
         }
         AppCatchException.bindCrashHandler(this) {
             !BuildConfig.DEBUG
-           // true
+            true
         }
     }
 }

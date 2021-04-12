@@ -128,7 +128,7 @@ class ChargeAudioManager {
                     audioMap[flag]?.add(pre.soundPath)
                 }
             }.also {
-                printAudioMap()
+                //printAudioMap()
             }
         }
     }
