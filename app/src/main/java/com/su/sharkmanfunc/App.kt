@@ -9,7 +9,7 @@ class App : Application() {
         super.onCreate()
         //初始化全局异常处理
         CrashActivityImpl.apply {
-            KUAN_URL = "https://www.bilibili.com/video/BV1iA41157NL/"
+            KUAN_URL = getString(R.string.b_video_url)
         }
         AppCatchException.bindCrashHandler(this) {
             !BuildConfig.DEBUG
