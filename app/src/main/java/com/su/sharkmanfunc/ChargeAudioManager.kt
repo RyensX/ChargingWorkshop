@@ -19,6 +19,15 @@ class ChargeAudioManager {
         private val flagBuffer by lazy { HashMap<String, String>() }
 
         @Synchronized
+        private fun setData(key: String, data: String) {
+            flagBuffer[key] = data
+        }
+
+        @Synchronized
+        private fun removeData(key: String) {
+            flagBuffer.remove(key)
+        }
+
         fun buffFlags(pre: SoundPreference) {
             MainScope().launch {
                 withContext(Dispatchers.IO) {
@@ -29,14 +38,13 @@ class ChargeAudioManager {
                         }
                         sb.removeSuffix(" ")
                         val data = sb.toString()
-                        flagBuffer[pre.title.toString()] = data
+                        setData(pre.title.toString(), data)
                     } else
-                        flagBuffer.remove(pre.title.toString())
+                        removeData(pre.title.toString())
                 }
             }
         }
 
-        @Synchronized
         fun saveFlags(context: Context) {
             MainScope().launch {
                 withContext(Dispatchers.IO) {
@@ -129,11 +137,11 @@ class ChargeAudioManager {
                             isEx = true
                     }
                     if (isEx && !pre.audioFlags.contains(audio.key))
-                        audio.value.remove(pre.soundPath)
+                        audio.value.removeData(pre.soundPath)
                 }
                 //添加
                 pre.audioFlags.forEach { flag ->
-                    audioMap[flag]?.add(pre.soundPath)
+                    audioMap[flag]?.addData(pre.soundPath)
                 }
             }.also {
                 //printAudioMap()
@@ -213,6 +221,16 @@ class ChargeAudioManager {
             block()
         }
         return this
+    }
+
+    @Synchronized
+    fun MutableList<String>.addData(data: String) {
+        add(data)
+    }
+
+    @Synchronized
+    fun MutableList<String>.removeData(key: String) {
+        remove(key)
     }
 
 }
