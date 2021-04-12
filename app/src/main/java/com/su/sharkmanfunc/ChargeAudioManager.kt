@@ -110,6 +110,14 @@ class ChargeAudioManager {
         println("#####################")
     }
 
+    fun checkIsEmptyAudio(): Boolean {
+        audioMap.forEach {
+            if (it.value.isNotEmpty())
+                return false
+        }
+        return true
+    }
+
     fun syncAudio(pre: SoundPreference) {
         MainScope().launch {
             withContext(Dispatchers.IO) {

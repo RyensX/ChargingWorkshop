@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
 import kotlinx.coroutines.Dispatchers
@@ -33,11 +34,16 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
             onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
                     if (it is SwitchPreference) {
-                        //Log.d("测速", "守护服务${it.isChecked}")
                         val intent = Intent(requireContext(), SharkManChargeService::class.java)
-                        if (it.isChecked)
+                        if (it.isChecked) {
+                            if (ChargeAudioManager.INS.checkIsEmptyAudio())
+                                Toast.makeText(
+                                    requireContext(),
+                                    "服务已启动，但尚未设置音频(拉到下方设置)，因此无论什么状态都不会发声。",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             requireActivity().startService(intent)
-                        else
+                        } else
                             requireActivity().stopService(intent)
                     }
                     true
