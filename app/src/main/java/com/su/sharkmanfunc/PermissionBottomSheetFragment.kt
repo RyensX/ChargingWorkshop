@@ -70,7 +70,7 @@ class PermissionBottomSheetFragment(@BottomSheetBehavior.State val bottomSheetSt
             perWindowReq = findViewById(R.id.per_window_req)
             perWindowReq.setOnClickListener {
                 if (!PermissionUtils.INS.checkWindowPermission(requireContext()))
-                    PermissionUtils.INS.requestWindowPermission(requireActivity())
+                    PermissionUtils.INS.requestWindowPermission(this@PermissionBottomSheetFragment)
                 else {
                     Toast.makeText(requireContext(), "已授予该权限", Toast.LENGTH_LONG).show()
                     syncPermissionStatus()

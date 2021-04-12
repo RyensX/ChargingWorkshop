@@ -6,6 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 
 class PermissionUtils {
@@ -19,11 +21,11 @@ class PermissionUtils {
     fun checkWindowPermission(context: Context) =
         Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(context)
 
-    fun requestWindowPermission(context: Activity) {
-        if (!checkWindowPermission(context)) {
+    fun requestWindowPermission(context: Fragment) {
+        if (!checkWindowPermission(context.requireContext())) {
             val intent = Intent(
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:${context.packageName}")
+                Uri.parse("package:${context.requireContext().packageName}")
             )
             context.startActivityForResult(intent, WINDOW_REQUEST_CODE)
         }
