@@ -36,7 +36,7 @@
         android:enabled="false"
         android:minWidth="0dp"
         android:minHeight="0dp"
-        android:text="手动授权"
+        android:text="自行授权"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
