@@ -18,19 +18,25 @@ class ChargeAudioManager {
 
         private val flagBuffer by lazy { HashMap<String, String>() }
 
+        @Synchronized
         fun buffFlags(pre: SoundPreference) {
-            if (pre.audioFlags.size > 0) {
-                val sb = StringBuilder()
-                pre.audioFlags.forEach {
-                    sb.append(it.ordinal).append(" ")
+            MainScope().launch {
+                withContext(Dispatchers.IO) {
+                    if (pre.audioFlags.size > 0) {
+                        val sb = StringBuilder()
+                        pre.audioFlags.forEach {
+                            sb.append(it.ordinal).append(" ")
+                        }
+                        sb.removeSuffix(" ")
+                        val data = sb.toString()
+                        flagBuffer[pre.title.toString()] = data
+                    } else
+                        flagBuffer.remove(pre.title.toString())
                 }
-                sb.removeSuffix(" ")
-                val data = sb.toString()
-                flagBuffer[pre.title.toString()] = data
-            } else
-                flagBuffer.remove(pre.title.toString())
+            }
         }
 
+        @Synchronized
         fun saveFlags(context: Context) {
             MainScope().launch {
                 withContext(Dispatchers.IO) {
