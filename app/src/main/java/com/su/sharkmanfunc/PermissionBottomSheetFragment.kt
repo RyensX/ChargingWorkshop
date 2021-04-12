@@ -1,15 +1,19 @@
 package com.su.sharkmanfunc
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -18,7 +22,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 
-class PermissionBottomSheetFragment : BottomSheetDialogFragment() {
+class PermissionBottomSheetFragment(@BottomSheetBehavior.State val bottomSheetState: Int = BottomSheetBehavior.STATE_COLLAPSED) :
+    BottomSheetDialogFragment() {
 
     private lateinit var perExit: TextView
     private lateinit var perWindowReq: TextView
@@ -26,7 +31,7 @@ class PermissionBottomSheetFragment : BottomSheetDialogFragment() {
 
     companion object {
         fun open(activity: FragmentActivity): PermissionBottomSheetFragment {
-            return PermissionBottomSheetFragment().apply {
+            return PermissionBottomSheetFragment(BottomSheetBehavior.STATE_EXPANDED).apply {
                 isCancelable = false
                 show(
                     activity.supportFragmentManager,
@@ -83,6 +88,19 @@ class PermissionBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState).apply {
+            if (this is BottomSheetDialog) {
+                behavior.apply {
+                    this@PermissionBottomSheetFragment.behavior = this
+                    state = bottomSheetState
+                }
+            }
+        }
+    }
+
+    var behavior: BottomSheetBehavior<FrameLayout>? = null
 
     private fun syncPermissionStatus() {
         val res = PermissionUtils.INS.checkWindowPermission(requireContext())
