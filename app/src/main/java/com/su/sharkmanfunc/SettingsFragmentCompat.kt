@@ -94,7 +94,6 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
             setTaskRecent(requireContext(), isChecked)
             onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
-                    syncAudioChoose(it)
                     if (it is SwitchPreference)
                         setTaskRecent(requireContext(), isChecked)
                     true
@@ -105,7 +104,6 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
             isNotOpenOnFull = isChecked
             onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
-                    syncAudioChoose(it)
                     if (it is SwitchPreference)
                         isNotOpenOnFull = it.isChecked
                     true
@@ -160,16 +158,6 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
     private fun traversAssets(context: Context, path: String) {
         val am = context.assets
 
-    }
-
-    private fun syncAudioChoose(pre: Preference) {
-        Log.d(
-            "视图",
-            "${
-                PreferenceViewHelper.INS!!.getPreferenceView(this, pre)
-                    ?.findViewById<TextView>(android.R.id.title)?.text
-            }"
-        )
     }
 
     override fun onPause() {
