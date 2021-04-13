@@ -126,26 +126,29 @@ class ChargeAudioManager {
         return true
     }
 
-    fun syncAudio(pre: SoundPreference) {
+    inline fun launchSyncAudio(pre: SoundPreference) {
         MainScope().launch {
             withContext(Dispatchers.IO) {
-                //移除
-                audioMap.forEach { audio ->
-                    var isEx = false
-                    audio.value.forEach { path ->
-                        if (path == pre.soundPath)
-                            isEx = true
-                    }
-                    if (isEx && !pre.audioFlags.contains(audio.key))
-                        audio.value.removeData(pre.soundPath)
-                }
-                //添加
-                pre.audioFlags.forEach { flag ->
-                    audioMap[flag]?.addData(pre.soundPath)
-                }
-            }.also {
-                //printAudioMap()
+                syncAudio(pre)
             }
+        }
+    }
+
+    @Synchronized
+    fun syncAudio(pre: SoundPreference) {
+        //移除
+        audioMap.forEach { audio ->
+            var isEx = false
+            audio.value.forEach { path ->
+                if (path == pre.soundPath)
+                    isEx = true
+            }
+            if (isEx && !pre.audioFlags.contains(audio.key))
+                audio.value.remove(pre.soundPath)
+        }
+        //添加
+        pre.audioFlags.forEach { flag ->
+            audioMap[flag]?.add(pre.soundPath)
         }
     }
 
@@ -236,16 +239,6 @@ class ChargeAudioManager {
             block()
         }
         return this
-    }
-
-    @Synchronized
-    fun MutableList<String>.addData(data: String) {
-        add(data)
-    }
-
-    @Synchronized
-    fun MutableList<String>.removeData(key: String) {
-        remove(key)
     }
 
 }

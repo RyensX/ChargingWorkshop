@@ -65,7 +65,7 @@ class SoundPreference(context: Context, val soundPath: String) : Preference(cont
         else
             audioFlags.add(flag)
         ChargeAudioManager.buffFlags(this)
-        ChargeAudioManager.INS.syncAudio(this)
+        ChargeAudioManager.INS.launchSyncAudio(this)
     }
 
     fun syncFlags() {

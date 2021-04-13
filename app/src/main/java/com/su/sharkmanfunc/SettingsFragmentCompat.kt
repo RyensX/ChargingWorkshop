@@ -145,7 +145,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                                 //读取音频Flag设置
                                 flagData?.get(pre.title)?.forEach { flag ->
                                     pre.changeFlag(flags[flag])
-                                } ?: ChargeAudioManager.INS.syncAudio(pre)
+                                } ?: ChargeAudioManager.INS.launchSyncAudio(pre)
 
                                 addPreference(pre)
                             }
