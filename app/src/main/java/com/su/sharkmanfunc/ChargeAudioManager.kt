@@ -195,9 +195,24 @@ class ChargeAudioManager {
             audioMap[flag]?.also {
                 if (it.size > 0) {
                     reset()
-                    val am = context.assets.openFd(it[it.indices.random()])
+                    val file = it[it.indices.random()]
+                    val am = context.assets.openFd(file)
                     setDataSource(am.fileDescriptor, am.startOffset, am.length)
                     prepareAsync()
+                    if (BuildConfig.DEBUG) {
+                        val audio = file.substring(file.indexOf("/") + 1, file.indexOf("."))
+                        if (flag != SoundPreference.AudioFlag.DISCONNECT)
+                            flag.printChargeState(
+                                context,
+                                "插入充电器 ",
+                                " 播放:${audio}"
+                            )
+                        else
+                            SoundPreference.AudioFlag.DISCONNECT.printChargeState(
+                                context,
+                                suf = "充电器  播放:$audio"
+                            )
+                    }
                 }
             }
         }
