@@ -10,6 +10,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.AbsoluteSizeSpan
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -53,6 +54,10 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
             setVideoURI(Uri.parse("android.resource://${packageName}/${R.raw.wired_quick_charge_video}"))
             setOnCompletionListener {
                 start()
+            }
+            setOnErrorListener { _, what, extra ->
+                Log.d("播放发生错误", "错误what=$what extra=$extra")
+                false
             }
             start()
         }
