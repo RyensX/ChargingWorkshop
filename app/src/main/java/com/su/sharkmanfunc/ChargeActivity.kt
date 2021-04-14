@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -63,6 +64,11 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
             }
             setOnErrorListener { _, what, extra ->
                 Log.d("播放发生错误", "错误what=$what extra=$extra")
+                Toast.makeText(
+                    this@ChargeActivity,
+                    "播放发生错误 what=$what extra=$extra",
+                    Toast.LENGTH_LONG
+                ).show()
                 false
             }
             start()
