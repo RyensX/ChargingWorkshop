@@ -92,6 +92,13 @@
             android:title="充电守护语音"
             app:iconSpaceReserved="false" />
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/is_keep_play_on_full"
+            android:summary="小心!!!开启后充满电只要没拔下来鲨鲨酱会一直叫，请谨慎使用"
+            android:title="满电持续播放"
+            app:iconSpaceReserved="false" />
+
     </com.su.sharkmanfunc.HelpPreferenceCategory>
 
     <PreferenceCategory
