@@ -43,14 +43,6 @@
         <SwitchPreference
             android:defaultValue="false"
             android:dependency="@string/charge_service"
-            android:key="@string/charge_is_audio"
-            android:summary="小心!!!这可能会导致你社死，请谨慎使用"
-            android:title="充电守护语音"
-            app:iconSpaceReserved="false" />
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:dependency="@string/charge_service"
             android:key="@string/charge_screen_on_open"
             android:summary="锁屏状态下亮屏显示动画，有效拯救你的插口"
             android:title="亮屏守护"
@@ -92,6 +84,13 @@
         android:key="@string/charge_sounds"
         android:title="音频设置"
         app:iconSpaceReserved="false">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/charge_is_audio"
+            android:summary="小心!!!这可能会导致你社死，请谨慎使用"
+            android:title="充电守护语音"
+            app:iconSpaceReserved="false" />
 
     </com.su.sharkmanfunc.HelpPreferenceCategory>
 
