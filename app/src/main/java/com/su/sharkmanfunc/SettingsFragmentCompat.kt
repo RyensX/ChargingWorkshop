@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
@@ -23,11 +22,25 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
         var isOpenOnClock = false
         var isKeepShow = false
         var isNotOpenOnFull = true
+        var isForegroundService = true
         private const val SOUNDS_PATH = "sounds"
     }
 
+    private var foregroundService: SwitchPreference? = null
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.pre_settings, rootKey)
+
+        foregroundService = findPreference(getString(R.string.charge_foreground_service))
+        foregroundService?.apply {
+            isEnabled = !SharkManChargeService.isOpen
+            isForegroundService = isChecked
+            onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                if (it is SwitchPreference)
+                    isForegroundService = isChecked
+                true
+            }
+        }
 
         findPreference<SwitchPreference>(getString(R.string.charge_service))?.apply {
             isChecked = SharkManChargeService.isOpen
@@ -45,6 +58,8 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                             requireActivity().startService(intent)
                         } else
                             requireActivity().stopService(intent)
+                        //锁定前台服务设置
+                        foregroundService?.isEnabled = !it.isChecked
                     }
                     true
                 }

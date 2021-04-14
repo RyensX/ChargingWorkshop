@@ -21,19 +21,21 @@ class SharkManChargeService : Service() {
     private lateinit var bbcr: BatteryBroadCastReceiver
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val nor = NotificationCompat.Builder(applicationContext, CHANNEL_ID).apply {
-            setContentTitle(CHANNEL_NAME)
-        }.build()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-            val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            manager.createNotificationChannel(notificationChannel)
+        if (SettingsFragmentCompat.isForegroundService) {
+            val nor = NotificationCompat.Builder(applicationContext, CHANNEL_ID).apply {
+                setContentTitle(CHANNEL_NAME)
+            }.build()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val notificationChannel = NotificationChannel(
+                    CHANNEL_ID,
+                    CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH
+                )
+                notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                manager.createNotificationChannel(notificationChannel)
+            }
+            startForeground(110, nor)
         }
-        startForeground(110, nor)
         return super.onStartCommand(intent, flags, startId)
     }
 
