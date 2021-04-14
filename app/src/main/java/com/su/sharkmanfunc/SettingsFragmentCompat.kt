@@ -104,8 +104,13 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
             isNotOpenOnFull = isChecked
             onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
-                    if (it is SwitchPreference)
+                    if (it is SwitchPreference) {
                         isNotOpenOnFull = it.isChecked
+                        if (!isNotOpenOnFull)
+                            PhoneUtils.removeCheckFullView(requireContext())
+                        else if (SharkManChargeService.isOpen)
+                            PhoneUtils.checkIsOnFullScreen(requireContext())
+                    }
                     true
                 }
         }

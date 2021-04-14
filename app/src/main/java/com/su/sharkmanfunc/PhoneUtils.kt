@@ -49,11 +49,20 @@ object PhoneUtils {
         }
     }
 
+    fun removeCheckFullView(context: Context) {
+        checkFullView?.apply {
+            val windowManager =
+                context.applicationContext.getSystemService(WINDOW_SERVICE) as WindowManager
+            windowManager.removeView(this)
+            checkFullView = null
+        }
+    }
+
     fun checkIsOnFullScreen(context: Context): Boolean {
         if (checkFullView == null) {
             val ac = context.applicationContext
             checkFullView = View(ac).apply {
-                setBackgroundColor(Color.TRANSPARENT)
+                setBackgroundColor(Color.RED)
             }
             val windowManager = ac.getSystemService(WINDOW_SERVICE) as WindowManager
             val params = WindowManager.LayoutParams().apply {
