@@ -87,6 +87,14 @@ class ChargeAudioManager {
                 }
             return null
         }
+
+        fun checkChargeState(battery: Int): SoundPreference.AudioFlag = when (battery) {
+            in 0..20 -> SoundPreference.AudioFlag.LOW
+            in 21..70 -> SoundPreference.AudioFlag.MEDIUM
+            in 71..99 -> SoundPreference.AudioFlag.HIGH
+            else -> SoundPreference.AudioFlag.FULL
+        }
+
     }
 
     private var media: MediaPlayer? = null

@@ -51,7 +51,15 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
         setBattery(BatteryBroadCastReceiver.firstBattery)
         //视频
         video.apply {
-            setVideoURI(Uri.parse("android.resource://${packageName}/${R.raw.wired_quick_charge_video}"))
+            val path = Uri.parse(
+                "android.resource://${packageName}/${
+                    if (ChargeAudioManager.checkChargeState(BatteryBroadCastReceiver.firstBattery) == SoundPreference.AudioFlag.LOW)
+                        R.raw.wired_charge_video
+                    else
+                        R.raw.wired_quick_charge_video
+                }"
+            )
+            setVideoURI(path)
             setOnCompletionListener {
                 start()
             }
