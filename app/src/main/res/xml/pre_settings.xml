@@ -99,6 +99,12 @@
             android:title="满电持续播放"
             app:iconSpaceReserved="false" />
 
+        <PreferenceCategory
+            android:title="音频列表"
+            app:allowDividerAbove="false"
+            app:allowDividerBelow="false"
+            app:iconSpaceReserved="false" />
+
     </com.su.sharkmanfunc.HelpPreferenceCategory>
 
     <PreferenceCategory
