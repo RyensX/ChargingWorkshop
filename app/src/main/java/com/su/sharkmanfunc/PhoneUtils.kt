@@ -85,7 +85,12 @@ object PhoneUtils {
                     else WindowManager.LayoutParams.TYPE_TOAST)
             }
 
-            windowManager.addView(checkFullView, params)
+            try {
+                windowManager.addView(checkFullView, params)
+            } catch (e: Exception) {
+                Log.d("全屏检测出现错误", e.message ?: "null")
+                checkFullView = null
+            }
         }
         val local = IntArray(2)
         checkFullView!!.getLocationOnScreen(local)
