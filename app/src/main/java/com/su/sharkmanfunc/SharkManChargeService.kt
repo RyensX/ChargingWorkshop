@@ -38,7 +38,8 @@ class SharkManChargeService : Service() {
         }
         configBattery()
         isOpen = true
-        PhoneUtils.checkIsOnFullScreen(this)
+        if (SettingsFragmentCompat.isNotOpenOnFull)
+            PhoneUtils.checkIsOnFullScreen(this)
         return super.onStartCommand(intent, flags, startId)
     }
 
