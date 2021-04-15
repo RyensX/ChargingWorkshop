@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (!PermissionUtils.INS.checkWindowPermission(this))
             PermissionBottomSheetFragment.open(this)
-        title = "$title ${packageManager.getPackageInfo(packageName, 0).versionName}"
+        title = "$title(${packageManager.getPackageInfo(packageName, 0).versionName})"
     }
 
     fun Activity.tip(msg: String) {
