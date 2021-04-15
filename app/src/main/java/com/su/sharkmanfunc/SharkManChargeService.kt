@@ -36,14 +36,10 @@ class SharkManChargeService : Service() {
             }
             startForeground(110, nor)
         }
-        return super.onStartCommand(intent, flags, startId)
-    }
-
-    override fun onCreate() {
-        super.onCreate()
         configBattery()
         isOpen = true
         PhoneUtils.checkIsOnFullScreen(this)
+        return super.onStartCommand(intent, flags, startId)
     }
 
     private fun configBattery() {
