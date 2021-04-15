@@ -175,7 +175,7 @@ class ChargeAudioManager {
                 in 0..20 -> playLow(context)
                 in 21..70 -> playMedium(context)
                 in 71..99 -> playHigh(context)
-                else -> if (SettingsFragmentCompat.checkKeepPlayOnFull()) playFull(context)
+                else -> playFull(context)
             }
         }
     }

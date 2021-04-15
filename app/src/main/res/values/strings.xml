@@ -12,7 +12,6 @@
     <string name="charge_boot_start">charge_boot_start</string>
     <string name="is_clear_recent">is_clear_recent</string>
     <string name="is_not_open_on_full">is_not_open_on_full</string>
-    <string name="is_keep_play_on_full">is_keep_play_on_full</string>
 
     <string name="audio_flags">audio_flags</string>
     <string name="b_video_url">https://www.bilibili.com/video/BV1uX4y137TS</string>

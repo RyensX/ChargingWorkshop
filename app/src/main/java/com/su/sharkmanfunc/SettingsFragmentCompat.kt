@@ -24,13 +24,6 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
         var isNotOpenOnFull = true
         var isForegroundService = true
         private const val SOUNDS_PATH = "sounds"
-
-        private var isKeepPlayOnFull = false
-        private var oneCharge = true
-        fun checkKeepPlayOnFull() = (isKeepPlayOnFull || oneCharge).also {
-            if (it)
-                oneCharge = false
-        }
     }
 
     private var foregroundService: SwitchPreference? = null
@@ -135,15 +128,6 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     }
                     true
                 }
-        }
-
-        findPreference<SwitchPreference>(getString(R.string.is_keep_play_on_full))?.apply {
-            isKeepPlayOnFull = isChecked
-            onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                if (it is SwitchPreference)
-                    isKeepPlayOnFull = isChecked
-                true
-            }
         }
 
         initSounds()
