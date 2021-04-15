@@ -30,7 +30,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.pre_settings, rootKey)
-
+        //以前台服务方式启动
         foregroundService = findPreference(getString(R.string.charge_foreground_service))
         foregroundService?.apply {
             isEnabled = !SharkManChargeService.isOpen
@@ -41,7 +41,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                 true
             }
         }
-
+        //充电守护服务
         findPreference<SwitchPreference>(getString(R.string.charge_service))?.apply {
             isChecked = SharkManChargeService.isOpen
             onPreferenceClickListener =
@@ -64,7 +64,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     true
                 }
         }
-
+        //是否播放音频
         findPreference<SwitchPreference>(getString(R.string.charge_is_audio))?.apply {
             isEnableAudio = isChecked
             onPreferenceClickListener =
@@ -84,7 +84,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     true
                 }
         }
-
+        //亮屏守护
         findPreference<SwitchPreference>(getString(R.string.charge_screen_on_open))?.apply {
             isOpenOnClock = isChecked
             onPreferenceClickListener =
@@ -94,7 +94,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     true
                 }
         }
-
+        //守护常亮
         findPreference<SwitchPreference>(getString(R.string.charge_keep_show))?.apply {
             isKeepShow = isChecked
             onPreferenceClickListener =
@@ -104,7 +104,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     true
                 }
         }
-
+        //隐藏最近任务
         findPreference<SwitchPreference>(getString(R.string.is_clear_recent))?.apply {
             setTaskRecent(requireContext(), isChecked)
             onPreferenceClickListener =
@@ -114,7 +114,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     true
                 }
         }
-
+        //勿扰模式
         findPreference<SwitchPreference>(getString(R.string.is_not_open_on_full))?.apply {
             isNotOpenOnFull = isChecked
             onPreferenceClickListener =
