@@ -47,7 +47,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
             onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
                     if (it is SwitchPreference) {
-                        val intent = Intent(requireContext(), SharkManChargeService::class.java)
+                        val intent = Intent(App.globalContext, SharkManChargeService::class.java)
                         if (it.isChecked) {
                             if (ChargeAudioManager.INS.checkIsEmptyAudio())
                                 Toast.makeText(
