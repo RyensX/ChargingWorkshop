@@ -18,7 +18,7 @@ class SharkManChargeService : Service() {
         var isOpen = false
     }
 
-    private lateinit var bbcr: BatteryBroadCastReceiver
+    private var bbcr: BatteryBroadCastReceiver? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (SettingsFragmentCompat.isForegroundService) {
@@ -45,7 +45,7 @@ class SharkManChargeService : Service() {
 
     private fun configBattery() {
         bbcr = BatteryBroadCastReceiver()
-        bbcr.register(this)
+        bbcr?.register(this)
     }
 
     override fun onBind(intent: Intent): IBinder {
@@ -53,7 +53,10 @@ class SharkManChargeService : Service() {
     }
 
     override fun onDestroy() {
-        unregisterReceiver(bbcr)
+        bbcr?.also {
+            unregisterReceiver(it)
+        }
+
         isOpen = false
 
         ChargeAudioManager.INS.release()
