@@ -30,7 +30,7 @@ class SharkManChargeService : Service() {
                     CHANNEL_ID,
                     CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH
                 )
-                notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                notificationChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
                 val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
                 manager.createNotificationChannel(notificationChannel)
             }
