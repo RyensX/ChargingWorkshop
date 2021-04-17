@@ -152,20 +152,25 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                         try {
                             val suffixRegex = Regex("\\..+")
                             list?.forEach {
-                                //创建音频Preference
-                                Log.d("文件", it)
-                                val pre =
-                                    SoundPreference(requireContext(), "${SOUNDS_PATH}/$it").apply {
-                                        title = it.replace(suffixRegex, "")
-                                        isIconSpaceReserved = false
-                                    }
-                                pre.onPreferenceClickListener = this@SettingsFragmentCompat
-                                //读取音频Flag设置
-                                flagData?.get(pre.title)?.forEach { flag ->
-                                    pre.changeFlag(flags[flag])
-                                } ?: ChargeAudioManager.INS.launchSyncAudio(pre)
+                                if (it.endsWith(".mp3")) {
+                                    //创建音频Preference
+                                    Log.d("文件", it)
+                                    val pre =
+                                        SoundPreference(
+                                            requireContext(),
+                                            "${SOUNDS_PATH}/$it"
+                                        ).apply {
+                                            title = it.replace(suffixRegex, "")
+                                            isIconSpaceReserved = false
+                                        }
+                                    pre.onPreferenceClickListener = this@SettingsFragmentCompat
+                                    //读取音频Flag设置
+                                    flagData?.get(pre.title)?.forEach { flag ->
+                                        pre.changeFlag(flags[flag])
+                                    } ?: ChargeAudioManager.INS.launchSyncAudio(pre)
 
-                                addPreference(pre)
+                                    addPreference(pre)
+                                }
                             }
                         } catch (e: Exception) {
                         }
