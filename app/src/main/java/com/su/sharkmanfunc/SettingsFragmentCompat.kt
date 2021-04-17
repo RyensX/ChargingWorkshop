@@ -149,6 +149,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                         am.list(SOUNDS_PATH)
                     }?.also { list ->
                         val flags = SoundPreference.AudioFlag.values()
+                        var effectiveNumber = 0
                         try {
                             val suffixRegex = Regex("\\..+")
                             list.forEach {
@@ -170,10 +171,11 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                                     } ?: ChargeAudioManager.INS.launchSyncAudio(pre)
 
                                     addPreference(pre)
+                                    effectiveNumber++
                                 }
                             }
                             findPreference<PreferenceCategory>(getString(R.string.sound_list))?.title =
-                                "${getString(R.string.sound_list)}(${list.size})"
+                                "${getString(R.string.sound_list)}(${effectiveNumber})"
                         } catch (e: Exception) {
                         }
                     }
