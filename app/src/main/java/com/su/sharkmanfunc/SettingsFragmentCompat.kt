@@ -10,8 +10,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferenceClickListener {
@@ -141,21 +141,17 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
     private fun initSounds() {
         findPreference<PreferenceCategory>(getString(R.string.charge_sounds))?.apply {
             MainScope().launch {
-                withContext(Dispatchers.IO) {
-                    ChargeAudioManager.getFlags(context)
-                }.also { flagData ->
-                    withContext(Dispatchers.IO) {
-                        val am = context.assets
-                        am.list(SOUNDS_PATH)
-                    }?.also { list ->
+                var effectiveNumber = 0
+                flow<Preference> {
+                    val flagData = ChargeAudioManager.getFlags(context)
+                    context.assets.list(SOUNDS_PATH)?.also { list ->
                         val flags = SoundPreference.AudioFlag.values()
-                        var effectiveNumber = 0
                         try {
                             val suffixRegex = Regex("\\..+")
                             list.forEach {
                                 if (it.endsWith(".mp3")) {
                                     //创建音频Preference
-                                    Log.d("文件", it)
+                                    Log.d("文件(${Thread.currentThread()})", it)
                                     val pre =
                                         SoundPreference(
                                             requireContext(),
@@ -170,16 +166,23 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                                         pre.changeFlag(flags[flag])
                                     } ?: ChargeAudioManager.INS.launchSyncAudio(pre)
 
-                                    addPreference(pre)
+                                    emit(pre)
                                     effectiveNumber++
                                 }
                             }
-                            findPreference<PreferenceCategory>(getString(R.string.sound_list))?.title =
-                                "${getString(R.string.sound_list)}(${effectiveNumber})"
                         } catch (e: Exception) {
                         }
                     }
                 }
+                    .flowOn(Dispatchers.IO)
+                    .onCompletion {
+                        findPreference<PreferenceCategory>(getString(R.string.sound_list))?.title =
+                            "${getString(R.string.sound_list)}(${effectiveNumber})"
+                    }
+                    .collect {
+                        Log.d("添加音频(${Thread.currentThread()})", it.title.toString())
+                        addPreference(it)
+                    }
             }
         }
     }
