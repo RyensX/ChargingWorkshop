@@ -147,11 +147,11 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     withContext(Dispatchers.IO) {
                         val am = context.assets
                         am.list(SOUNDS_PATH)
-                    }.also { list ->
+                    }?.also { list ->
                         val flags = SoundPreference.AudioFlag.values()
                         try {
                             val suffixRegex = Regex("\\..+")
-                            list?.forEach {
+                            list.forEach {
                                 if (it.endsWith(".mp3")) {
                                     //创建音频Preference
                                     Log.d("文件", it)
@@ -172,6 +172,8 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                                     addPreference(pre)
                                 }
                             }
+                            findPreference<PreferenceCategory>(getString(R.string.sound_list))?.title =
+                                "${getString(R.string.sound_list)}(${list.size})"
                         } catch (e: Exception) {
                         }
                     }

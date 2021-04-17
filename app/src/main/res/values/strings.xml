@@ -16,6 +16,7 @@
     <string name="audio_flags">audio_flags</string>
     <string name="b_video_url">https://www.bilibili.com/video/BV1uX4y137TS</string>
     <string name="start_use_text">开始使用</string>
+    <string name="sound_list">音频列表</string>
 
     <string name="audio_setting_help">
         目前音频支持在五种状态下播放\n

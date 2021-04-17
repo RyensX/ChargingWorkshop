@@ -93,7 +93,8 @@
             app:iconSpaceReserved="false" />
 
         <PreferenceCategory
-            android:title="音频列表"
+            android:key="@string/sound_list"
+            android:title="@string/sound_list"
             app:allowDividerAbove="false"
             app:allowDividerBelow="false"
             app:iconSpaceReserved="false" />
