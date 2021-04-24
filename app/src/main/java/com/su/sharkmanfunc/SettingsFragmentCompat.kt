@@ -49,10 +49,10 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     if (it is SwitchPreference) {
                         val intent = Intent(App.globalContext, SharkManChargeService::class.java)
                         if (it.isChecked) {
-                            if (ChargeAudioManager.INS.checkIsEmptyAudio())
+                            if (ChargeAudioManager.INS.checkIsEmptyAudio() || !isEnableAudio)
                                 Toast.makeText(
-                                    requireContext(),
-                                    "服务已启动，但尚未设置音频(拉到下方设置)，因此无论什么状态都不会发声。",
+                                    App.globalContext,
+                                    "服务已启动，但未开启语音或尚未设置音频(拉到下方设置)，因此无论什么状态都不会发声。",
                                     Toast.LENGTH_LONG
                                 ).show()
                             requireActivity().startService(intent)
