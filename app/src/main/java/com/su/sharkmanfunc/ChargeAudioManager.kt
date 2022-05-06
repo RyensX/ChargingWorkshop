@@ -134,7 +134,7 @@ class ChargeAudioManager {
         return true
     }
 
-    inline fun launchSyncAudio(pre: SoundPreference) {
+    fun launchSyncAudio(pre: SoundPreference) {
         MainScope().launch {
             withContext(Dispatchers.IO) {
                 syncAudio(pre)

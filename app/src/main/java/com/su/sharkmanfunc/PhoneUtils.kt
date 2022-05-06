@@ -18,7 +18,7 @@ import android.view.WindowManager
 @SuppressLint("StaticFieldLeak")
 object PhoneUtils {
 
-    inline fun getDefaultSharedPreferences(context: Context): SharedPreferences =
+    fun getDefaultSharedPreferences(context: Context): SharedPreferences =
         context.getSharedPreferences(
             "${context.packageName}_preferences",
             Context.MODE_PRIVATE
