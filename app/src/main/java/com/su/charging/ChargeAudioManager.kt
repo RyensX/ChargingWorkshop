@@ -119,7 +119,7 @@ class ChargeAudioManager {
         )
 
     fun printAudioMap() {
-        println("########测速数据#########")
+        println("########测试数据#########")
         audioMap.forEach { data ->
             Log.d("Flag=", data.key.name)
             val sb = StringBuilder()

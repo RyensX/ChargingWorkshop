@@ -45,6 +45,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
             Charging.normalChargingVideo.absolutePath,
             Charging.quickChargingVideo.absolutePath
         )
+        findPreference<Preference>("clear_audio_flags")?.onPreferenceClickListener = this
         findPreference<Preference>("audio")?.summary = Charging.audioResPath.absolutePath
         initPre()
         initSounds()
@@ -228,11 +229,6 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
 
     }
 
-    override fun onPause() {
-        super.onPause()
-        ChargeAudioManager.saveFlags(requireContext())
-    }
-
     private var lastClickPreference: SoundPreference? = null
     private val chooseDialog by lazy {
         val items =
@@ -253,12 +249,27 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     syncFlags()
                 }
             }
+            ChargeAudioManager.saveFlags(requireContext())
         }
     }
 
     override fun onPreferenceClick(preference: Preference?): Boolean {
-        lastClickPreference = preference as SoundPreference?
-        chooseDialog.show()
+        when (preference?.key) {
+            "clear_audio_flags" -> {
+                //清空flags
+                val context = requireContext()
+                val sp = PhoneUtils.getDefaultSharedPreferences(context)
+                sp.edit().apply {
+                    remove(context.getString(R.string.audio_flags))
+                    apply()
+                }
+                requireActivity().recreate()
+            }
+            else -> {
+                lastClickPreference = preference as SoundPreference?
+                chooseDialog.show()
+            }
+        }
         return true
     }
 
