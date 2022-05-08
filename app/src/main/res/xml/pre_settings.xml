@@ -112,13 +112,13 @@
             app:iconSpaceReserved="false">
 
             <Preference
-                android:key="clear_audio_flags"
-                android:title="清空音频配置"
-                app:iconSpaceReserved="false" />
-
-            <Preference
                 android:key="audio"
                 android:title="音频路径"
+                app:iconSpaceReserved="false" />
+            <Preference
+                android:icon="@drawable/ic_baseline_warning_24"
+                android:key="clear_audio_flags"
+                android:title="清空音频配置"
                 app:iconSpaceReserved="false" />
 
         </PreferenceCategory>
