@@ -78,7 +78,7 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
         }
     }
 
-    private inline fun openChargeAnim(context: Context) {
+    private fun openChargeAnim(context: Context) {
         Intent(context, ChargeActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
         }.also { context.startActivity(it) }

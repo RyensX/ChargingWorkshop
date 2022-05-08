@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.su.charging.receiver.BatteryBroadCastReceiver
 import com.su.charging.ChargeAudioManager
+import com.su.charging.Charging
 import com.su.charging.R
 import com.su.charging.view.fragment.SettingsFragmentCompat
 import com.su.charging.view.preference.SoundPreference
@@ -55,15 +56,16 @@ class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryList
         setBattery(BatteryBroadCastReceiver.firstBattery)
         //视频
         video.apply {
-            val path = Uri.parse(
-                "android.resource://${packageName}/${
-                    if (ChargeAudioManager.checkChargeState(BatteryBroadCastReceiver.firstBattery) == SoundPreference.AudioFlag.LOW)
-                        R.raw.wired_charge_video_h264_baseline
-                    else
-                        R.raw.wired_quick_charge_video_h264_baseline
-                }"
-            )
-            setVideoURI(path)
+            val path =
+                if (ChargeAudioManager.checkChargeState(BatteryBroadCastReceiver.firstBattery) == SoundPreference.AudioFlag.LOW)
+                    Charging.normalChargingVideo
+                else
+                    Charging.quickChargingVideo
+            if (!path.exists()) {
+                Toast.makeText(this@ChargeActivity, "无可用充电动画", Toast.LENGTH_SHORT).show()
+                return
+            }
+            setVideoPath(path.absolutePath)
             setOnCompletionListener {
                 start()
             }

@@ -9,9 +9,8 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
-import com.su.charging.App
-import com.su.charging.ChargeAudioManager
-import com.su.charging.ChargingService
+import com.su.charging.*
+import com.su.charging.R
 import com.su.charging.util.PhoneUtils
 import com.su.charging.view.preference.SoundPreference
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +18,6 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.su.charging.R
 
 
 class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferenceClickListener {
@@ -31,8 +29,9 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
         var isKeepShow = false
         var isNotOpenOnFull = true
         var isForegroundService = true
-        private const val SOUNDS_PATH = "sounds"
     }
+
+    private val scope = MainScope()
 
     private var foregroundService: SwitchPreference? = null
 
@@ -41,6 +40,12 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
 
         findPreference<Preference>("version")?.summary =
             requireContext().run { packageManager.getPackageInfo(packageName, 0).versionName }
+        findPreference<Preference>("video")?.summary = getString(
+            R.string.video_res_path_format,
+            Charging.normalChargingVideo.absolutePath,
+            Charging.quickChargingVideo.absolutePath
+        )
+        findPreference<Preference>("audio")?.summary = Charging.audioResPath.absolutePath
         initPre()
         initSounds()
     }
@@ -67,7 +72,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
     }
 
     private fun initPre() {
-        MainScope().launch {
+        scope.launch {
             class PreInit(
                 @StringRes val id: Int,
                 val initMethod: SwitchPreference. () -> Unit,
@@ -88,25 +93,40 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                     PreInit(
                         R.string.charge_service,
                         { isChecked = ChargingService.isOpen }) {
-                        val intent = Intent(App.globalContext, ChargingService::class.java)
-                        if (isChecked) {
-                            if (ChargeAudioManager.INS.checkIsEmptyAudio() || !isEnableAudio)
-                                Toast.makeText(
-                                    App.globalContext,
-                                    "服务已启动，但未开启语音或尚未设置音频(拉到下方设置)，因此无论什么状态都不会发声。",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            requireActivity().startService(intent)
-                        } else
-                            requireActivity().stopService(intent)
-                        //锁定前台服务设置
-                        foregroundService?.isEnabled = !isChecked
+                        runCatching {
+                            if (!Charging.normalChargingVideo.exists() || !Charging.quickChargingVideo.exists())
+                                throw RuntimeException("未添加动画文件，请根据路径放入动画文件")
+
+                            val intent = Intent(App.globalContext, ChargingService::class.java)
+                            if (isChecked) {
+                                if (ChargeAudioManager.INS.checkIsEmptyAudio() || !isEnableAudio)
+                                    Toast.makeText(
+                                        App.globalContext,
+                                        "服务已启动，但未开启语音或尚未设置音频(拉到下方设置)，因此无论什么状态都不会发声。",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                requireActivity().startService(intent)
+                            } else
+                                requireActivity().stopService(intent)
+                            //锁定前台服务设置
+                            foregroundService?.isEnabled = !isChecked
+                        }.onFailure {
+                            isChecked = false
+                            Toast.makeText(App.globalContext, it.message, Toast.LENGTH_SHORT).show()
+                        }
                     },
                     //是否播放音频
                     PreInit(
                         R.string.charge_is_audio,
                         { isEnableAudio = isChecked }) {
-                        isEnableAudio = isChecked
+                        runCatching {
+                            if (!Charging.audioResPath.exists())
+                                throw RuntimeException("未添加音频文件，请根据路径放入音频文件")
+                            isEnableAudio = isChecked
+                        }.onFailure {
+                            isChecked = false
+                            Toast.makeText(App.globalContext, it.message, Toast.LENGTH_SHORT).show()
+                        }
                     },
                     //亮屏守护
                     PreInit(R.string.charge_screen_on_open, { isOpenOnClock = isChecked }) {
@@ -155,24 +175,24 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
 
     private fun initSounds() {
         findPreference<PreferenceCategory>(getString(R.string.charge_sounds))?.apply {
-            MainScope().launch {
+            scope.launch {
                 var effectiveNumber = 0
                 flow<Preference> {
                     val flagData = ChargeAudioManager.getFlags(context)
-                    context.assets.list(SOUNDS_PATH)?.also { list ->
+                    Charging.audioResPath.listFiles()?.also { list ->
                         val flags = SoundPreference.AudioFlag.values()
                         try {
                             val suffixRegex = Regex("\\..+")
                             list.forEach {
-                                if (it.endsWith(".mp3")) {
+                                if (it.name.endsWith(".mp3")) {
                                     //创建音频Preference
-                                    Log.d("文件(${Thread.currentThread()})", it)
+                                    Log.d("文件(${Thread.currentThread()})", it.absolutePath)
                                     val pre =
                                         SoundPreference(
                                             requireContext(),
-                                            "$SOUNDS_PATH/$it"
+                                            it.absolutePath
                                         ).apply {
-                                            title = it.replace(suffixRegex, "")
+                                            title = it.name.replace(suffixRegex, "")
                                             isIconSpaceReserved = false
                                         }
                                     pre.onPreferenceClickListener = this@SettingsFragmentCompat
@@ -189,6 +209,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                         }
                     }
                 }
+                    .catch {}
                     .flowOn(Dispatchers.IO)
                     .onCompletion {
                         findPreference<PreferenceCategory>(getString(R.string.sound_list))?.title =

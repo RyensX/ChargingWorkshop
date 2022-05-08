@@ -18,6 +18,15 @@
     <string name="start_use_text">开始使用</string>
     <string name="sound_list">音频列表</string>
 
+    <string name="video_res_path_format">
+        \n
+        普通充电：\n
+        %s
+        \n
+        快速充电：\n
+        %s
+    </string>
+
     <string name="audio_setting_help">
         目前音频支持在五种状态下播放\n
         分别是：\n

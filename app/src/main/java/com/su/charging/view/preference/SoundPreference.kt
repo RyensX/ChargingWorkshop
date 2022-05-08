@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.su.charging.ChargeAudioManager
+import com.su.charging.util.runCatchingOrReport
 
 class SoundPreference(context: Context, val soundPath: String) : Preference(context) {
 
@@ -37,13 +38,14 @@ class SoundPreference(context: Context, val soundPath: String) : Preference(cont
     }
 
     fun playAudio() {
-        media?.apply {
-            Log.d("播放", soundPath)
-            val am = context.assets.openFd(soundPath)
-            stop()
-            reset()
-            setDataSource(am.fileDescriptor, am.startOffset, am.length)
-            prepareAsync()
+        runCatchingOrReport {
+            media?.apply {
+                Log.d("播放", soundPath)
+                stop()
+                reset()
+                setDataSource(soundPath)
+                prepareAsync()
+            }
         }
     }
 

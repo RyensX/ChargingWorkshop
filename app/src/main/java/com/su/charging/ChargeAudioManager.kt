@@ -3,15 +3,16 @@ package com.su.charging
 import android.content.Context
 import android.media.MediaPlayer
 import android.util.Log
+import android.widget.Toast
 import com.su.charging.util.PhoneUtils
 import com.su.charging.util.printChargeState
+import com.su.charging.util.runCatchingOrReport
 import com.su.charging.view.preference.SoundPreference
 import com.su.charging.view.fragment.SettingsFragmentCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
 
 class ChargeAudioManager {
 
@@ -211,8 +212,7 @@ class ChargeAudioManager {
                 if (it.size > 0) {
                     reset()
                     val file = it[it.indices.random()]
-                    val am = context.assets.openFd(file)
-                    setDataSource(am.fileDescriptor, am.startOffset, am.length)
+                    setDataSource(file)
                     prepareAsync()
                     if (BuildConfig.DEBUG) {
                         val audio = file.substring(file.indexOf("/") + 1, file.indexOf("."))
@@ -247,8 +247,10 @@ class ChargeAudioManager {
     }
 
     inline fun <T> T.checkApply(block: T.() -> Unit): T {
-        if (SettingsFragmentCompat.isEnableAudio) {
-            block()
+        runCatchingOrReport {
+            if (SettingsFragmentCompat.isEnableAudio) {
+                block()
+            }
         }
         return this
     }
