@@ -1,4 +1,4 @@
-package com.su.sharkmanfunc
+package com.su.charging.view.preference
 
 import android.content.Context
 import android.media.MediaPlayer
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
+import com.su.charging.ChargeAudioManager
 
 class SoundPreference(context: Context, val soundPath: String) : Preference(context) {
 

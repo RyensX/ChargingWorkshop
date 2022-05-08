@@ -1,4 +1,4 @@
-package com.su.sharkmanfunc
+package com.su.charging
 
 import org.junit.Test
 

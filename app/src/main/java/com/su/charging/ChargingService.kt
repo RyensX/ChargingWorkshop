@@ -1,4 +1,4 @@
-package com.su.sharkmanfunc
+package com.su.charging
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -8,12 +8,16 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import com.su.charging.receiver.BatteryBroadCastReceiver
+import com.su.charging.util.PhoneUtils
+import com.su.charging.view.preference.SoundPreference
+import com.su.charging.view.fragment.SettingsFragmentCompat
 
 
-class SharkManChargeService : Service() {
+class ChargingService : Service() {
 
     companion object {
-        const val CHANNEL_NAME = "鲨鲨酱充电守护服务"
+        const val CHANNEL_NAME = "充电守护服务"
         const val CHANNEL_ID = "CHANNEL_ID"
         var isOpen = false
     }

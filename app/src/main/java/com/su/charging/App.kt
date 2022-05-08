@@ -1,4 +1,4 @@
-package com.su.sharkmanfunc
+package com.su.charging
 
 import android.annotation.SuppressLint
 import android.app.Application
@@ -19,7 +19,7 @@ class App : Application() {
         globalContext = applicationContext
         //初始化全局异常处理
         CrashActivityImpl.apply {
-            KUAN_URL = getString(R.string.b_video_url)
+            KUAN_URL = getString(R.string.b_url)
         }
         AppCatchException.bindCrashHandler(this) {
             !BuildConfig.DEBUG

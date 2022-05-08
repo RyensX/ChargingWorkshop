@@ -1,10 +1,15 @@
-package com.su.sharkmanfunc
+package com.su.charging.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
+import com.su.charging.ChargeAudioManager
+import com.su.charging.util.PhoneUtils
+import com.su.charging.util.checkIsClock
+import com.su.charging.view.activity.ChargeActivity
+import com.su.charging.view.fragment.SettingsFragmentCompat
 
 class BatteryBroadCastReceiver : BroadcastReceiver() {
 
@@ -14,7 +19,7 @@ class BatteryBroadCastReceiver : BroadcastReceiver() {
         var firstBattery = 0
 
         fun addBatteryListener(listener: BatteryListener) {
-            this.listener = listener
+            Companion.listener = listener
         }
 
         fun removeBatteryListener() {

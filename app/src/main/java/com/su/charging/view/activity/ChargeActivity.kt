@@ -1,4 +1,4 @@
-package com.su.sharkmanfunc
+package com.su.charging.view.activity
 
 import android.app.KeyguardManager
 import android.content.Context
@@ -18,6 +18,11 @@ import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.su.charging.receiver.BatteryBroadCastReceiver
+import com.su.charging.ChargeAudioManager
+import com.su.charging.R
+import com.su.charging.view.fragment.SettingsFragmentCompat
+import com.su.charging.view.preference.SoundPreference
 import kotlin.math.ceil
 
 class ChargeActivity : AppCompatActivity(), BatteryBroadCastReceiver.BatteryListener {

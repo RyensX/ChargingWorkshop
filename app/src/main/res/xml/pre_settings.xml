@@ -6,20 +6,20 @@
         android:title="关于"
         app:iconSpaceReserved="false">
         <Preference
+            android:key="version"
+            android:title="版本"
+            app:iconSpaceReserved="false" />
+        <Preference
             android:summary="免费娱乐软件，仅供学习交流"
             android:title="声明"
             app:iconSpaceReserved="false" />
         <Preference
-            android:summary="B站/酷安@Ryens"
+            android:summary="B站/酷安@Ryens 单击跳转关注"
             android:title="开发者"
-            app:iconSpaceReserved="false" />
-        <Preference
-            android:summary="点击跳转，欢迎五连支持"
-            android:title="教程/演示"
             app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="@string/b_video_url" />
+                android:data="@string/b_url" />
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory
@@ -29,8 +29,8 @@
             android:defaultValue="false"
             android:key="@string/charge_service"
             android:persistent="false"
-            android:summary="开启后插入充电器充电时会得到鲨鲨酱的守护"
-            android:title="鲨鲨酱充电守护"
+            android:summary="开启后插入充电器充电时会显示充电动画"
+            android:title="充电守护"
             app:iconSpaceReserved="false" />
 
         <SwitchPreference
@@ -52,7 +52,7 @@
             android:defaultValue="false"
             android:dependency="@string/charge_service"
             android:key="@string/charge_keep_show"
-            android:summary="也许你想一直看着鲨鲨酱，但请注意耗电和屏幕损耗"
+            android:summary="开启后充电动画会保持常亮"
             android:title="守护常亮"
             app:iconSpaceReserved="false" />
 
@@ -60,7 +60,7 @@
             android:defaultValue="true"
             android:dependency="@string/charge_service"
             android:key="@string/charge_click_close"
-            android:summary="显示鲨鲨酱时点击即关闭显示"
+            android:summary="显示充电动画时点击即关闭显示"
             android:title="触摸关闭"
             app:iconSpaceReserved="false" />
 
@@ -74,13 +74,13 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/charge_boot_start"
-            android:summary="开机时自动启动鲨鲨酱充电守护服务，请注意授予自启权限"
+            android:summary="开机时自动启动充电守护服务，请注意授予自启权限"
             android:title="开机自启动"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
-    <com.su.sharkmanfunc.HelpPreferenceCategory
+    <com.su.charging.view.preference.HelpPreferenceCategory
         android:key="@string/charge_sounds"
         android:title="音频设置"
         app:iconSpaceReserved="false">
@@ -99,7 +99,7 @@
             app:allowDividerBelow="false"
             app:iconSpaceReserved="false" />
 
-    </com.su.sharkmanfunc.HelpPreferenceCategory>
+    </com.su.charging.view.preference.HelpPreferenceCategory>
 
     <PreferenceCategory
         android:title="其他"

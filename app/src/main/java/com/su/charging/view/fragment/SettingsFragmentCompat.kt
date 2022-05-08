@@ -1,4 +1,4 @@
-package com.su.sharkmanfunc
+package com.su.charging.view.fragment
 
 import android.app.ActivityManager
 import android.content.Context
@@ -9,11 +9,17 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
+import com.su.charging.App
+import com.su.charging.ChargeAudioManager
+import com.su.charging.ChargingService
+import com.su.charging.util.PhoneUtils
+import com.su.charging.view.preference.SoundPreference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.su.charging.R
 
 
 class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferenceClickListener {
@@ -33,6 +39,8 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.pre_settings, rootKey)
 
+        findPreference<Preference>("version")?.summary =
+            requireContext().run { packageManager.getPackageInfo(packageName, 0).versionName }
         initPre()
         initSounds()
     }
@@ -71,14 +79,16 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                 val pres = mutableListOf<SwitchPreference>()
                 datas = arrayOf(
                     //以前台服务方式启动
-                    PreInit(R.string.charge_foreground_service,
-                        { isEnabled = !SharkManChargeService.isOpen }) {
+                    PreInit(
+                        R.string.charge_foreground_service,
+                        { isEnabled = !ChargingService.isOpen }) {
                         isForegroundService = isChecked
                     },
                     //充电守护服务
-                    PreInit(R.string.charge_service,
-                        { isChecked = SharkManChargeService.isOpen }) {
-                        val intent = Intent(App.globalContext, SharkManChargeService::class.java)
+                    PreInit(
+                        R.string.charge_service,
+                        { isChecked = ChargingService.isOpen }) {
+                        val intent = Intent(App.globalContext, ChargingService::class.java)
                         if (isChecked) {
                             if (ChargeAudioManager.INS.checkIsEmptyAudio() || !isEnableAudio)
                                 Toast.makeText(
@@ -93,7 +103,8 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                         foregroundService?.isEnabled = !isChecked
                     },
                     //是否播放音频
-                    PreInit(R.string.charge_is_audio,
+                    PreInit(
+                        R.string.charge_is_audio,
                         { isEnableAudio = isChecked }) {
                         isEnableAudio = isChecked
                     },
@@ -102,22 +113,25 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                         isOpenOnClock = isChecked
                     },
                     //守护常亮
-                    PreInit(R.string.charge_keep_show,
+                    PreInit(
+                        R.string.charge_keep_show,
                         { isKeepShow = isChecked }) {
                         isKeepShow = isChecked
                     },
                     //隐藏最近任务
-                    PreInit(R.string.is_clear_recent,
+                    PreInit(
+                        R.string.is_clear_recent,
                         { setTaskRecent(requireContext(), isChecked) }) {
                         setTaskRecent(requireContext(), isChecked)
                     },
                     //勿扰模式
-                    PreInit(R.string.is_not_open_on_full,
+                    PreInit(
+                        R.string.is_not_open_on_full,
                         { isNotOpenOnFull = isChecked }) {
                         isNotOpenOnFull = isChecked
                         if (!isNotOpenOnFull)
                             PhoneUtils.removeCheckFullView(requireContext())
-                        else if (SharkManChargeService.isOpen)
+                        else if (ChargingService.isOpen)
                             PhoneUtils.checkIsOnFullScreen(requireContext())
                     }
                 )
@@ -156,7 +170,7 @@ class SettingsFragmentCompat : PreferenceFragmentCompat(), Preference.OnPreferen
                                     val pre =
                                         SoundPreference(
                                             requireContext(),
-                                            "${SOUNDS_PATH}/$it"
+                                            "$SOUNDS_PATH/$it"
                                         ).apply {
                                             title = it.replace(suffixRegex, "")
                                             isIconSpaceReserved = false

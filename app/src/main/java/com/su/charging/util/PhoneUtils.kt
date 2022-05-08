@@ -1,4 +1,4 @@
-package com.su.sharkmanfunc
+package com.su.charging.util
 
 import android.annotation.SuppressLint
 import android.content.Context

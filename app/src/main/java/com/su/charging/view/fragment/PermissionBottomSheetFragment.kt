@@ -1,4 +1,4 @@
-package com.su.sharkmanfunc
+package com.su.charging.view.fragment
 
 import android.app.Dialog
 import android.content.Intent
@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.su.charging.util.PermissionUtils
+import com.su.charging.R
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.asFlow

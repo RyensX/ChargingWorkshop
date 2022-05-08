@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">鲨鲨酱.jpg</string>
+    <string name="app_name">充电工坊</string>
     <string name="charge_task">charge_task</string>
     <string name="charge_service">charge_service</string>
     <string name="charge_foreground_service">charge_foreground_service</string>
@@ -14,7 +14,7 @@
     <string name="is_not_open_on_full">is_not_open_on_full</string>
 
     <string name="audio_flags">audio_flags</string>
-    <string name="b_video_url">https://www.bilibili.com/video/BV1uX4y137TS</string>
+    <string name="b_url">https://space.bilibili.com/12845795</string>
     <string name="start_use_text">开始使用</string>
     <string name="sound_list">音频列表</string>
 

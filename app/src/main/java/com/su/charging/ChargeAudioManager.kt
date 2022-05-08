@@ -1,8 +1,12 @@
-package com.su.sharkmanfunc
+package com.su.charging
 
 import android.content.Context
 import android.media.MediaPlayer
 import android.util.Log
+import com.su.charging.util.PhoneUtils
+import com.su.charging.util.printChargeState
+import com.su.charging.view.preference.SoundPreference
+import com.su.charging.view.fragment.SettingsFragmentCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch

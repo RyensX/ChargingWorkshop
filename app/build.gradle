@@ -7,7 +7,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.su.sharkmanfunc"
+        applicationId "com.su.charging"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 8
@@ -37,7 +37,7 @@ android {
             variant.outputs.all {
                 output ->
                     def outputFile = output.outputFile
-                    def appName = "鲨鲨酱.jpg_"
+                    def appName = "充电工坊_"
                     if (outputFile != null && outputFile.name.contains('release')) {
                         def fileName = appName + "${variant.versionName}(${versionCode})_release.apk"
                         outputFileName = fileName

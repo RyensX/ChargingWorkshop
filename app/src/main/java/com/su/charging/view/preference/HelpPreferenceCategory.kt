@@ -1,4 +1,4 @@
-package com.su.sharkmanfunc
+package com.su.charging.view.preference
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceViewHolder
+import com.su.charging.R
 
 class HelpPreferenceCategory(context: Context, attributes: AttributeSet) :
     PreferenceCategory(context, attributes), View.OnClickListener {
